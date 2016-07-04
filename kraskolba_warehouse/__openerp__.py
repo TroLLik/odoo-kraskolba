@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 # noinspection PyStatementEffect
 {
-    'name': "Gcap Price",
-    'summary': """Система менеджмента прайс-листов для оптовых покупателей Gravicap""",
+    'name': "Kraskolba Warehouse",
+    'summary': """Система управления складом kraskolba.ru""",
 
     'description': """
-        Модуль для управления прайс-листами Gcap и их отображением
+        Модуль для управления складом kraskolba
     """,
 
     'author': "TroLL",
-    'website': "http://www.gravicap.com",
+    'website': "http://www.kraskolba.ru",
     'license ': 'Proprietary',
 
     'application': True,
 
-    'category': 'Price',
+    'category': 'warehouse',
     'version': '0.1',
 
     'sequence': 22,
@@ -22,14 +22,14 @@
     'auto_install': False,
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'web', 'gcap_base', 'report_aeroo', 'cron'],
+    'depends': ['base', 'web', 'kraskolba_base', 'report_aeroo', 'cron'],
 
     # always loaded
     'data': [
 #        'security/security.xml',
 #        'security/ir.model.access.csv',
-#        'view/gcap_price_view.xml',
-        'menu/gcap_price_menu.xml',
-#        'reports/gcap_price_report.xml',
+#        'view/kraskolba_warehouse_view.xml',
+        'menu/kraskolba_warehouse_menu.xml',
+#        'reports/kraskolba_warehouse_report.xml',
     ],
 }

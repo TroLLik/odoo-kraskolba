@@ -3,7 +3,7 @@
     <data>
         <template id="assets_backend" name="tabel assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <link rel="stylesheet" href="/kspu_dean/static/src/css/kspu_dean.css"/>
+                <link rel="stylesheet" href="/kraskolba_warehouse/static/src/css/kraskolba_warehouse.css"/>
             </xpath>
         </template>
 

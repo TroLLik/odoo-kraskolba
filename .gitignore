@@ -1,0 +1,8 @@
+/.idea/
+
+!.gitkeep
+
+/*todo.txt
+
+*.orig
+*.py[cdo]

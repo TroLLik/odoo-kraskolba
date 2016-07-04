@@ -2,5 +2,5 @@
 from openerp import models, api, fields
 
 
-class PriceList(models.Model):
-    _name = 'gcap.price.pricelist'
+class depots(models.Model):
+    _name = 'kraskolba.warehouse.depots'
