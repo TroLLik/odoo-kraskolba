@@ -28,7 +28,7 @@
     'data': [
 #        'security/security.xml',
 #        'security/ir.model.access.csv',
-#        'view/kraskolba_warehouse_view.xml',
+        'view/kraskolba_warehouse_view.xml',
         'menu/kraskolba_warehouse_menu.xml',
 #        'reports/kraskolba_warehouse_report.xml',
     ],
