@@ -1,41 +1,69 @@
 # coding=utf-8 #
 from openerp import models, api, fields
 
+STATES = [
+    ('status1', "Статус1"),
+    ('status2', "Статус2"),
+    ('status3', "Статус3"),
+]
 
-class depot(models.Model):
+
+class Depot(models.Model):
     _name = 'kraskolba.warehouse.depot'
-    serialnumber = fields.Char(string=u'Сер. №', required=False, size=100)
+    _rec_name = 'name'
+
     name = fields.Char(string=u'Название', required=True, index=True, size=100)
+    serial_number = fields.Char(string=u'Сер. №', required=False, size=100)
     address = fields.Char(string=u'Адрес', required=True, index=True, size=100)
+    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.goods', compute='_get_goods')
 
-    goods = fields.Many2one(string=u'Товар', comodel_name='kraskolba.warehouse.goods')
-    
-class goods(models.Model)
+    @api.one
+    def _get_goods(self):
+        goods_ids = self.env['kraskolba.warehouse.goods'].search([('depot', '=', self.id)])
+        if goods_ids:
+            self.goods = goods_ids
+        else:
+            self.goods = None
+
+
+class GoodType(models.Model):
+    _name = 'kraskolba.warehouse.good_type'
+    _rec_name = 'name'
+
+    name = fields.Char(string=u'Название', required=True, size=100)
+    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.goods', compute='_get_goods')
+
+    @api.one
+    def _get_goods(self):
+        goods_ids = self.env['kraskolba.warehouse.goods'].search([('type', '=', self.id)])
+        if goods_ids:
+            self.goods = goods_ids
+        else:
+            self.goods = None
+
+
+class Goods(models.Model):
     _name = 'kraskolba.warehouse.goods'
+    _rec_name = 'name'
+
     name = fields.Char(string=u'Название', required=True, index=True, size=100)
-    type = fields.Selection([
-        ('type1', "Тип1"),
-        ('type2', "Тип2"),
-        ('type3', "Тип3"),
-    ], default='type1', string=u'Тип склада')
-    status = fields.Selection([
-        ('status1', "Статус1"),
-        ('status2', "Статус2"),
-        ('status3', "Статус3"),
-    ], default='status1', string=u'Статус склада')
+    type = fields.Many2one(comodel_name='kraskolba.warehouse.good_type')
+    state = fields.Selection(STATES, default='status1', string=u'Статус товара')
     price = fields.Float(default=0, string=u'Цена')
-    quantity = fields.Integer(default=0, string=u'Кол-во')
+    quantity = fields.Integer(default=1, string=u'Кол-во')
+    depot = fields.Many2one(comodel_name='kraskolba.warehouse.depot',
+                            ondelete='restrict')
 
-    depot = fields.One2many(comodel_name='kraskolba.warehouse.depot', inverse_name='goods',
-                                   ondelete='restrict')
 
-class Document(models.Model):
-    _name = 'kraskolba.warehouse.doc'
-    #в этой модели предпологается вести документы производящие движение товара
+# class Document(models.Model):
+#     _name = 'kraskolba.warehouse.doc'
+# в этой модели предпологается вести документы производящие движение товара
+
 
 class Employee(models.Model):
     _name = 'kraskolba.warehouse.employee'
     _rec_name = 'full_name'
+
     last_name = fields.Char(string=u'Фамилия', required=True, index=True, size=200)
     first_name = fields.Char(string=u'Имя', required=True, size=100)
     middle_name = fields.Char(string=u'Отчество', required=True, size=100)
@@ -44,11 +72,10 @@ class Employee(models.Model):
         ('seller', u'Продавец'),
         ('manager', u'Менеджер'),
         ('admin', u'Администратор'),
-    ], default='seller',  required=True, string=u'Должность')
+    ], default='seller', required=True, string=u'Должность')
 
-#    create_order = fields.One2many(comodel_name='kraskolba.warehouse.order', inverse_name='create_maker', ondelete='restrict')
-
-#    order_executive_engineer = fields.One2many(string=u'Заказы', comodel_name='kraskolba.warehouse.order', inverse_name='executive_engineer', ondelete='restrict')
+    #    create_order = fields.One2many(comodel_name='kraskolba.warehouse.order', inverse_name='create_maker', ondelete='restrict')
+    #    order_executive_engineer = fields.One2many(string=u'Заказы', comodel_name='kraskolba.warehouse.order', inverse_name='executive_engineer', ondelete='restrict')
 
 
     @api.one
@@ -66,10 +93,12 @@ class Employee(models.Model):
                 ('middle_name', operator, value),
                 ]
 
+
 class User(models.Model):
     _inherit = 'res.users'
 
-#    _sql_constraints = [
-#        ('kraskolba.warehouse.employee', 'unique(employee_id)', u"Уникальный сотрудник"),
-#    ]
-    employee_id = fields.Many2one(string=u'Сотрудник', comodel_name='kraskolba.warehouse.employee', ondelete='set null', required=False, groups="gcap_fix.group_gcap_fix_superuser")
+    #    _sql_constraints = [
+    #        ('kraskolba.warehouse.employee', 'unique(employee_id)', u"Уникальный сотрудник"),
+    #    ]
+    employee_id = fields.Many2one(string=u'Сотрудник', comodel_name='kraskolba.warehouse.employee', ondelete='set null',
+                                  required=False, groups="gcap_fix.group_gcap_fix_superuser")

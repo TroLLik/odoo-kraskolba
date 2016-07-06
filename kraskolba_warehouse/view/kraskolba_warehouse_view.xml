@@ -9,8 +9,8 @@
 
         <!--employee begin-->
         <record id="view_kraskolba_warehouse_employee_tree" model="ir.ui.view">
-            <field name="name">gcap.fix.employee.tree</field>
-            <field name="model">gcap.fix.employee</field>
+            <field name="name">kraskolba.warehouse.employee.tree</field>
+            <field name="model">kraskolba.warehouse.employee</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="last_name"/>
