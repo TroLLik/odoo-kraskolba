@@ -32,6 +32,7 @@ class GoodType(models.Model):
 
     name = fields.Char(string=u'Название', required=True, size=100)
     goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.goods', compute='_get_goods')
+    count = fields.Integer(string=u'Количество', compute='_count_goods')
 
     @api.one
     def _get_goods(self):
@@ -40,6 +41,10 @@ class GoodType(models.Model):
             self.goods = goods_ids
         else:
             self.goods = None
+
+    @api.one
+    def _count_goods(self):
+        self.count = len(self.goods)
 
 
 class Goods(models.Model):

@@ -22,8 +22,8 @@
         </record>
 
         <record id="view_kraskolba_warehouse_employee_form" model="ir.ui.view">
-            <field name="name">gcap.fix.employee.form</field>
-            <field name="model">gcap.fix.employee</field>
+            <field name="name">kraskolba.warehouse.employee.form</field>
+            <field name="model">kraskolba.warehouse.employee</field>
             <field name="arch" type="xml">
                 <form string="Данные сотрудников">
                     <group>
@@ -55,14 +55,14 @@
 
         <record id="action_kraskolba_warehouse_employee" model="ir.actions.act_window">
             <field name="name">Список сотрудников</field>
-            <field name="res_model">gcap.fix.employee</field>
+            <field name="res_model">kraskolba.warehouse.employee</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
         <record id="employee_view_search" model="ir.ui.view">
             <field name="name">employee.search</field>
-            <field name="model">gcap.fix.employee</field>
+            <field name="model">kraskolba.warehouse.employee</field>
             <field name="arch" type="xml">
                 <search>
                     <field name="full_name"/>
@@ -74,6 +74,165 @@
             </field>
         </record>
         <!--employee end-->
+
+        <!-- depot -->
+        <record id="view_kraskolba_warehouse_depot_tree" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.depot.tree</field>
+            <field name="model">kraskolba.warehouse.depot</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="serial_number"/>
+                    <field name="address"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_kraskolba_warehouse_depot_form" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.depot.form</field>
+            <field name="model">kraskolba.warehouse.depot</field>
+            <field name="arch" type="xml">
+                <form string="Данные склада">
+                    <group>
+                        <field name="name"/>
+                        <field name="serial_number"/>
+                        <field name="address"/>
+                        <field name="goods">
+                            <!--<tree string="Заказы">-->
+                            <!--<field name="id" string="№ заказа"/>-->
+                            <!--<field name="create_date" string="Дата принятия"/>-->
+                            <!--<field name="readydate"/>-->
+                            <!--<field name="issuedate"/>-->
+                            <!--<field name="estimatedreadydate"/>-->
+                            <!--<field name="serialnumber"/>-->
+                            <!--<field name="devmod"/>-->
+                            <!--<field name="pre_price"/>-->
+                            <!--<field name="real_price"/>-->
+                            <!--<field name="client"/>-->
+                            <!--<field name="client_tel_number" string="Номер клиента"/>-->
+                            <!--<field name="state"/>-->
+                            <!--<field name="fix_type"/>-->
+                            <!--</tree>-->
+                        </field>>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_kraskolba_warehouse_depot" model="ir.actions.act_window">
+            <field name="name">Список складов</field>
+            <field name="res_model">kraskolba.warehouse.depot</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- depot -->
+
+        <!-- goodtype -->
+        <record id="view_kraskolba_warehouse_goodtype_tree" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.goodtype.tree</field>
+            <field name="model">kraskolba.warehouse.goodtype</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="count"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_kraskolba_warehouse_goodtype_form" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.goodtype.form</field>
+            <field name="model">kraskolba.warehouse.goodtype</field>
+            <field name="arch" type="xml">
+                <form string="Данные склада">
+                    <group>
+                        <field name="name"/>
+                        <field name="goods">
+                            <!--<tree string="Заказы">-->
+                            <!--<field name="id" string="№ заказа"/>-->
+                            <!--<field name="create_date" string="Дата принятия"/>-->
+                            <!--<field name="readydate"/>-->
+                            <!--<field name="issuedate"/>-->
+                            <!--<field name="estimatedreadydate"/>-->
+                            <!--<field name="serialnumber"/>-->
+                            <!--<field name="devmod"/>-->
+                            <!--<field name="pre_price"/>-->
+                            <!--<field name="real_price"/>-->
+                            <!--<field name="client"/>-->
+                            <!--<field name="client_tel_number" string="Номер клиента"/>-->
+                            <!--<field name="state"/>-->
+                            <!--<field name="fix_type"/>-->
+                            <!--</tree>-->
+                        </field>>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_kraskolba_warehouse_goodtype" model="ir.actions.act_window">
+            <field name="name">Список категорий</field>
+            <field name="res_model">kraskolba.warehouse.goodtype</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- goodtype -->
+
+        <!-- goods -->
+        <record id="view_kraskolba_warehouse_goods_tree" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.goods.tree</field>
+            <field name="model">kraskolba.warehouse.goods</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="type"/>
+                    <field name="name"/>
+                    <field name="state"/>
+                    <field name="depot"/>
+                    <field name="quantity"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_kraskolba_warehouse_goods_form" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.goods.form</field>
+            <field name="model">kraskolba.warehouse.goods</field>
+            <field name="arch" type="xml">
+                <form string="Данные товара">
+                    <group>
+                        <!-- Надо в 2 столбца все воткнуть, шоб красота была -->
+                        <field name="type"/>
+                        <field name="name"/>
+                        <field name="state"/>
+                        <field name="depot"/>
+                        <field name="quantity"/>
+                        <field name="price"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_kraskolba_warehouse_goods" model="ir.actions.act_window">
+            <field name="name">Список товаров</field>
+            <field name="res_model">kraskolba.warehouse.goods</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="goods_view_search" model="ir.ui.view">
+            <field name="name">goods.search</field>
+            <field name="model">kraskolba.warehouse.goods</field>
+            <field name="arch" type="xml">
+                <search>
+                    <group string="Сгруппировать">
+                        <filter name="group_goods_by_type" string="Категория" context="{'group_by': 'type'}"/>
+                        <filter name="group_goods_by_depot" string="Склад" context="{'group_by': 'depot'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- goods -->
  
     </data>
 </openerp>
