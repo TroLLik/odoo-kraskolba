@@ -9,28 +9,27 @@
                   action="base.grant_menu_access"/>
 
 
-        <menuitem name="Список складов" sequence="16" id="menu_kraskolba_warehouse_depot"
-                  parent="menu_kraskolba_warehouse_directory"
-                  action="action_kraskolba_warehouse_depot"
-                  groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
-
         <!-- Справочники -->
 
         <menuitem name="Справочники" sequence="15" id="menu_kraskolba_warehouse_directory" parent="menu_kraskolba_warehouse_root"/>
 
+        <menuitem name="Список складов" sequence="11" id="menu_kraskolba_warehouse_depot"
+                  parent="menu_kraskolba_warehouse_directory"
+                  action="action_kraskolba_warehouse_depot"
+                  groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
 
         <menuitem name="Список товаров" sequence="16" id="menu_kraskolba_warehouse_goods"
                   parent="menu_kraskolba_warehouse_directory"
                   action="action_kraskolba_warehouse_goods"
                   groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
 
-        <menuitem name="Список категорий" sequence="16" id="menu_kraskolba_warehouse_goodtype"
+        <menuitem name="Список категорий" sequence="17" id="menu_kraskolba_warehouse_goodtype"
                   parent="menu_kraskolba_warehouse_directory"
                   action="action_kraskolba_warehouse_goodtype"
                   groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
 
 
-        <menuitem name="Список сотрудников" sequence="16" id="menu_kraskolba_warehouse_employee" parent="menu_kraskolba_warehouse_directory"
+        <menuitem name="Список сотрудников" sequence="18" id="menu_kraskolba_warehouse_employee" parent="menu_kraskolba_warehouse_directory"
                   action="action_kraskolba_warehouse_employee" groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
     </data>
 </openerp>

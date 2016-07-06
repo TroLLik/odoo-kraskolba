@@ -27,7 +27,7 @@ class Depot(models.Model):
 
 
 class GoodType(models.Model):
-    _name = 'kraskolba.warehouse.good_type'
+    _name = 'kraskolba.warehouse.goodtype'
     _rec_name = 'name'
 
     name = fields.Char(string=u'Название', required=True, size=100)

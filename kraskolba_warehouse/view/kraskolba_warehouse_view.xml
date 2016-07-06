@@ -31,23 +31,7 @@
                     <field name="first_name"/>
                     <field name="middle_name"/>
                     <field name="position"/>
-                    <field name="order_executive_engineer">
-                        <tree string="Заказы">
-                            <field name="id" string="№ заказа"/>
-                            <field name="create_date" string="Дата принятия"/>
-                            <field name="readydate"/>
-                            <field name="issuedate"/>
-                            <field name="estimatedreadydate"/>
-                            <field name="serialnumber"/>
-                            <field name="devmod"/>
-                            <field name="pre_price"/>
-                            <field name="real_price"/>
-                            <field name="client"/>
-                            <field name="client_tel_number" string="Номер клиента"/>
-                            <field name="state"/>
-                            <field name="fix_type"/>
-                        </tree>
-                    </field>>
+
                     </group>
                 </form>
             </field>
@@ -113,7 +97,7 @@
                             <!--<field name="state"/>-->
                             <!--<field name="fix_type"/>-->
                             <!--</tree>-->
-                        </field>>
+                        </field>
                     </group>
                 </form>
             </field>
