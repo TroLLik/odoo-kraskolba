@@ -54,7 +54,7 @@ class Goods(models.Model):
     _rec_name = 'name'
     _constraints = [
         (_check_quantity, u'Неверное значение', ['quantity']),
-        (_check_quantity, u'Неверное значение', ['price'])
+        (_check_price, u'Неверное значение', ['price'])
     ]
 
     name = fields.Char(string=u'Название', required=True, index=True, size=100)
