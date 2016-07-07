@@ -45,6 +45,8 @@ class GoodType(models.Model):
     @api.one
     def _count_goods(self):
         self.count = len(self.goods)
+        # Подсчет количества единиц товаров
+        # self.count = sum(x.count for x in self.goods)
 
 
 class Goods(models.Model):
