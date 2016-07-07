@@ -50,14 +50,34 @@ class GoodType(models.Model):
 class Goods(models.Model):
     _name = 'kraskolba.warehouse.goods'
     _rec_name = 'name'
+    _constraints = [
+        (_check_quantity, u'Неверное значение', ['quantity']),
+        (_check_quantity, u'Неверное значение', ['price'])
+    ]
 
     name = fields.Char(string=u'Название', required=True, index=True, size=100)
-    type = fields.Many2one(comodel_name='kraskolba.warehouse.good_type')
+    type = fields.Many2one(string=u'Категория', comodel_name='kraskolba.warehouse.goodtype')
     state = fields.Selection(STATES, default='status1', string=u'Статус товара')
     price = fields.Float(default=0, string=u'Цена')
     quantity = fields.Integer(default=1, string=u'Кол-во')
-    depot = fields.Many2one(comodel_name='kraskolba.warehouse.depot',
+    depot = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot',
                             ondelete='restrict')
+
+
+# Запрещаем вводить отрицательные числа в количество товара
+def _check_quantity(self, cr, uid, ids, context=None):
+    for obj in self.browse(cr, uid, ids, context=context):
+        if obj.quantity < 0:
+            return False
+    return True
+
+
+# Запрещаем вводить отрицательные числа в стоимость товара
+def _check_price(self, cr, uid, ids, context=None):
+    for obj in self.browse(cr, uid, ids, context=context):
+        if obj.quantity < 0:
+            return False
+    return True
 
 
 # class Document(models.Model):
