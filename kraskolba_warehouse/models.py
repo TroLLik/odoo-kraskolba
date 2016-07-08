@@ -77,7 +77,7 @@ def _check_quantity(self, cr, uid, ids, context=None):
 # Запрещаем вводить отрицательные числа в стоимость товара
 def _check_price(self, cr, uid, ids, context=None):
     for obj in self.browse(cr, uid, ids, context=context):
-        if obj.quantity < 0:
+        if obj.price < 0:
             return False
     return True
 
