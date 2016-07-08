@@ -64,6 +64,7 @@ class Goods(models.Model):
     quantity = fields.Integer(default=1, string=u'Кол-во')
     depot = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot',
                             ondelete='restrict')
+    note = fields.Text(string=u'Примечание')
 
 
 # Запрещаем вводить отрицательные числа в количество товара

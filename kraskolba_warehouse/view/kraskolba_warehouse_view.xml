@@ -191,6 +191,7 @@
                         <field name="depot"/>
                         <field name="quantity"/>
                         <field name="price"/>
+                        <field name="note"/>
                     </group>
                 </form>
             </field>
