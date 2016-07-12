@@ -66,21 +66,20 @@ class Goods(models.Model):
                             ondelete='restrict')
     note = fields.Text(string=u'Примечание')
 
-
     # Запрещаем вводить отрицательные числа в количество товара
-    def _check_quantity(self, cr, uid, ids, context=None):
-        for obj in self.browse(cr, uid, ids, context=context):
-            if obj.quantity < 0:
-                return False
-        return True
+    @api.one
+    @api.constrains('quantity')    
+    def _check_quantity(self):
+        if self.quantity < 0:
+            raise exceptions.ValidationError("Неверное значение.")
 
 
     # Запрещаем вводить отрицательные числа в стоимость товара
-    def _check_price(self, cr, uid, ids, context=None):
-        for obj in self.browse(cr, uid, ids, context=context):
-            if obj.price < 0:
-                return False
-        return True
+    @api.one
+    @api.constrains('price')    
+    def _check_price(self):
+        if self.price < 0:
+            raise exceptions.ValidationError("Неверное значение.")
 
 
 # class Document(models.Model):
