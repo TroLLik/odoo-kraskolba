@@ -52,10 +52,6 @@ class GoodType(models.Model):
 class Goods(models.Model):
     _name = 'kraskolba.warehouse.goods'
     _rec_name = 'name'
-    _constraints = [
-        (_check_quantity, u'Неверное значение', ['quantity']),
-        (_check_price, u'Неверное значение', ['price'])
-    ]
 
     name = fields.Char(string=u'Название', required=True, index=True, size=100)
     type = fields.Many2one(string=u'Категория', comodel_name='kraskolba.warehouse.goodtype')
