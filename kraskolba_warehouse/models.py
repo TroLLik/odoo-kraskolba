@@ -125,3 +125,17 @@ class User(models.Model):
     #    ]
     employee_id = fields.Many2one(string=u'Сотрудник', comodel_name='kraskolba.warehouse.employee', ondelete='set null',
                                   required=False, groups="gcap_fix.group_gcap_fix_superuser")
+
+
+
+
+class Nomenclature(models.Model):
+    _name = 'kraskolba.warehouse.nomenclature'
+    _parent_store = True
+    _order = 'data_id'
+    parent_id = fields.Many2one(string=u'Родительское подразделение', comodel_name='kraskolba.warehouse.nomenclature',
+                                ondelete='restrict')
+    data_id = fields.Many2one(string=u'Состояние', comodel_name='kraskolba.warehouse.nomenclature', ondelete='cascade',
+                              required=True)
+    parent_left = fields.Integer(_('Left Parent'), select=True)
+    parent_right = fields.Integer(_('Right Parent'), select=True)
