@@ -37,8 +37,11 @@ RUN set -x; \
 # Make sure we don't get notifications we can't answer during building.
 ENV    DEBIAN_FRONTEND noninteractive
 
-# add odoo files
-ADD ./odoo /opt/odoo
+# # add odoo files
+# ADD ./odoo /opt/odoo
+
+#clone odoo
+RUN git clone https://www.github.com/odoo/odoo --depth 1 --branch 8.0 --single-branch /opt/odoo
 
 VOLUME ["/mnt/proj", "/mnt/log"]
 
