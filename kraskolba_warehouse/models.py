@@ -129,13 +129,13 @@ class User(models.Model):
 
 
 
-class Nomenclature(models.Model):
-    _name = 'kraskolba.warehouse.nomenclature'
-    _parent_store = True
-    _order = 'data_id'
-    parent_id = fields.Many2one(string=u'Родительское подразделение', comodel_name='kraskolba.warehouse.nomenclature',
-                                ondelete='restrict')
-    data_id = fields.Many2one(string=u'Состояние', comodel_name='kraskolba.warehouse.nomenclature', ondelete='cascade',
-                              required=True)
-    parent_left = fields.Integer(_('Left Parent'), select=True)
-    parent_right = fields.Integer(_('Right Parent'), select=True)
+# class Nomenclature(models.Model):
+#     _name = 'kraskolba.warehouse.nomenclature'
+#     _parent_store = True
+#     _order = 'data_id'
+#     parent_id = fields.Many2one(string=u'Родительское подразделение', comodel_name='kraskolba.warehouse.nomenclature',
+#                                 ondelete='restrict')
+#     data_id = fields.Many2one(string=u'Состояние', comodel_name='kraskolba.warehouse.nomenclature', ondelete='cascade',
+#                               required=True)
+#     parent_left = fields.Integer(_('Left Parent'), select=True)
+#     parent_right = fields.Integer(_('Right Parent'), select=True)

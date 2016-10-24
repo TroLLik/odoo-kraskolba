@@ -22,7 +22,8 @@
     'auto_install': False,
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'web', 'kraskolba_base', 'report_aeroo', 'cron'],
+    'depends': ['base', 'web', 'kraskolba_base', 'report_aeroo'],
+    #'depends': ['base', 'web', 'kraskolba_base', 'report_aeroo', 'cron'],
 
     # always loaded
     'data': [
