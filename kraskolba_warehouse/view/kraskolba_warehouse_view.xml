@@ -123,6 +123,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
+                    <field name="category"/>
                     <field name="article"/>
                     <field name="code"/>
                     <field name="quantity"/>
@@ -160,6 +161,7 @@
                             <field name="unit"/>
                             <field name="description"/>
                             <field name="comment"/>
+                            <field name="category"/>
                         </group>
                     </sheet>
                 </form>
@@ -217,6 +219,13 @@
                                         <field name="name" />
                                         <field name="code" />
                                     </tree>
+                                </field>
+                            </page>
+                            <page string="Номенклатура" name="nomenclatures">
+                                <field name="nomenclature_idx" colspan="6" nolabel="1">
+                                    <!--<tree name="active_subcategories_inline" editable="bottom" default_order="name">-->
+                                    <!--<field name="name" />-->
+                                    <!--</tree>-->
                                 </field>
                             </page>
                         </notebook>

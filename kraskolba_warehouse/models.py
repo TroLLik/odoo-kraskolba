@@ -88,6 +88,7 @@ class User(models.Model):
     employee_id = fields.Many2one(string=u'Сотрудник', comodel_name='kraskolba.warehouse.employee', ondelete='set null',
                                   required=False, groups="gcap_fix.group_gcap_fix_superuser")
 
+
 class GoodsCategory(models.Model):
     _name = 'kraskolba.warehouse.goodscategory'
     _parent_store = True
@@ -110,6 +111,17 @@ class GoodsCategory(models.Model):
 
     name = fields.Char(string=u'Название', required=True, index=True, size=40)
     code = fields.Char(string=u'Код', required=False, size=50)
+
+    nomenclature_idx = fields.One2many(string=u'Номенклатура', comodel_name='kraskolba.warehouse.nomenclature',
+                                       compute='_get_nomenclature')
+
+    @api.one
+    def _get_nomenclature(self):
+        nomenclature_ids = self.env['kraskolba.warehouse.nomenclature'].search([('category', '=', self.id)])
+        if nomenclature_ids:
+            self.nomenclature_idx = nomenclature_ids
+        else:
+            self.nomenclature_idx = None
 
     @api.one
     @api.depends('name', 'parent_id.name')
@@ -157,6 +169,7 @@ class GoodsCategory(models.Model):
 
         raise ValueError('Invalid operator %s' % operator)
 
+
 class Nomenclature(models.Model):
     _name = 'kraskolba.warehouse.nomenclature'
     _rec_name = 'name'
@@ -180,7 +193,7 @@ class Nomenclature(models.Model):
     supplier = fields.Many2one(string=u'Поставщик', comodel_name='kraskolba.warehouse.supplier')
     manufacturer = fields.Many2one(string=u'Производитель', comodel_name='kraskolba.warehouse.manufacturer')
 
-    #    category = fields.Many2one(string=u'Поставщик', comodel_name='kraskolba.warehouse.supplier')
+    category = fields.Many2one(string=u'Категория', comodel_name='kraskolba.warehouse.goodscategory')
 
     @api.one
     @api.constrains('quantity')
