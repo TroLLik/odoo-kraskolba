@@ -7,6 +7,12 @@ STATES = [
     ('status3', "Статус3"),
 ]
 
+UNITS = [
+    ('units', u"шт"),
+    ('meters', u"метров"),
+    ('kilo', u"кг"),
+]
+
 
 class Depot(models.Model):
     _name = 'kraskolba.warehouse.depot'
@@ -64,15 +70,14 @@ class Goods(models.Model):
 
     # Запрещаем вводить отрицательные числа в количество товара
     @api.one
-    @api.constrains('quantity')    
+    @api.constrains('quantity')
     def _check_quantity(self):
         if self.quantity < 0:
             raise exceptions.ValidationError("Неверное значение.")
 
-
     # Запрещаем вводить отрицательные числа в стоимость товара
     @api.one
-    @api.constrains('price')    
+    @api.constrains('price')
     def _check_price(self):
         if self.price < 0:
             raise exceptions.ValidationError("Неверное значение.")
@@ -127,15 +132,59 @@ class User(models.Model):
                                   required=False, groups="gcap_fix.group_gcap_fix_superuser")
 
 
+class Nomenclature(models.Model):
+    _name = 'kraskolba.warehouse.nomenclature'
+    _rec_name = 'name'
+
+    name = fields.Char(string=u'Наименование', required=True, index=True, size=200)
+    article = fields.Integer(string=u'Артикул')
+    code = fields.Integer(string=u'Код')
+    unit = fields.Selection(string=u'Ед.измерения', selection=UNITS, default=UNITS[0][0], )
+    price = fields.Float(string=u'Цена', default=0)
+    quantity = fields.Integer(default=1, string=u'Количество')
+    image = fields.Binary(string=u'Изображение', )
+    tax = fields.Integer(string=u'Налог (%)', default=0)
+    discount = fields.Integer(string=u'Скидка (%)', default=0)
+    description = fields.Text(string=u'Описание')
+    comment = fields.Char(string=u'Комментарий', size=300)
+    supplier = fields.Many2one(string=u'Поставщик', comodel_name='kraskolba.warehouse.supplier')
+    manufacturer = fields.Many2one(string=u'Производитель', comodel_name='kraskolba.warehouse.manufacturer')
+
+    #    category = fields.Many2one(string=u'Поставщик', comodel_name='kraskolba.warehouse.supplier')
+
+    @api.one
+    @api.constrains('quantity')
+    def _check_quantity(self):
+        if self.quantity <= 0:
+            raise exceptions.ValidationError(u"Количество не может быть меньше единицы.")
+
+    # Запрещаем вводить отрицательные числа в стоимость товара
+    @api.one
+    @api.constrains('price')
+    def _check_price(self):
+        if self.price < 0:
+            raise exceptions.ValidationError(u"Цена не может быть меньше нуля.")
 
 
-# class Nomenclature(models.Model):
-#     _name = 'kraskolba.warehouse.nomenclature'
-#     _parent_store = True
-#     _order = 'data_id'
-#     parent_id = fields.Many2one(string=u'Родительское подразделение', comodel_name='kraskolba.warehouse.nomenclature',
-#                                 ondelete='restrict')
-#     data_id = fields.Many2one(string=u'Состояние', comodel_name='kraskolba.warehouse.nomenclature', ondelete='cascade',
-#                               required=True)
-#     parent_left = fields.Integer(_('Left Parent'), select=True)
-#     parent_right = fields.Integer(_('Right Parent'), select=True)
+class Supplier(models.Model):
+    _name = 'kraskolba.warehouse.supplier'
+    _rec_name = 'full_name'
+
+    name = fields.Char(string=u'ФИО', size=255)
+    organization = fields.Char(string=u'Организация', size=255)
+    full_name = fields.Char(string=u'Организация+ФИО', size=510, compute='get_full_name')
+
+    def get_full_name(self):
+        self.full_name = u'{0} ({1})'.format(self.organization, self.name)
+
+
+class Manufacturer(models.Model):
+    _name = 'kraskolba.warehouse.manufacturer'
+    _rec_name = 'full_name'
+
+    name = fields.Char(string=u'ФИО', size=255)
+    organization = fields.Char(string=u'Организация', size=255)
+    full_name = fields.Char(string=u'Организация+ФИО', size=510, compute='get_full_name')
+
+    def get_full_name(self):
+        self.full_name = u'{0} ({1})'.format(self.organization, self.name)

@@ -18,9 +18,9 @@
                   action="action_kraskolba_warehouse_depot"
                   groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
 
-        <menuitem name="Список товаров" sequence="16" id="menu_kraskolba_warehouse_goods"
+        <menuitem name="Список товаров" sequence="16" id="menu_kraskolba_warehouse_nomenclature"
                   parent="menu_kraskolba_warehouse_directory"
-                  action="action_kraskolba_warehouse_goods"
+                  action="action_kraskolba_warehouse_nomenclature"
                   groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
 
         <menuitem name="Список категорий" sequence="17" id="menu_kraskolba_warehouse_goodtype"
