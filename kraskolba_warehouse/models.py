@@ -1,6 +1,9 @@
 # coding=utf-8 #
 from openerp import models, api, fields, exceptions
 
+from openerp.tools.translate import _
+from openerp.osv.expression import FALSE_DOMAIN, TRUE_DOMAIN
+
 STATES = [
     ('status1', "Статус1"),
     ('status2', "Статус2"),
@@ -127,15 +130,70 @@ class User(models.Model):
                                   required=False, groups="gcap_fix.group_gcap_fix_superuser")
 
 
+class GoodsCategory(models.Model):
+    _name = 'kraskolba.warehouse.goodscategory'
+    _parent_store = True
+    _rec_name = 'complete_name'
+    _parent_order = 'name'
+    _order = 'parent_left'
 
+    _sql_constraints = [
+        ('goodscategory_name_and_parent_idx', 'unique(name, parent_id)', u"Уникальный объект"),
+    ]
 
-# class Nomenclature(models.Model):
-#     _name = 'kraskolba.warehouse.nomenclature'
-#     _parent_store = True
-#     _order = 'data_id'
-#     parent_id = fields.Many2one(string=u'Родительское подразделение', comodel_name='kraskolba.warehouse.nomenclature',
-#                                 ondelete='restrict')
-#     data_id = fields.Many2one(string=u'Состояние', comodel_name='kraskolba.warehouse.nomenclature', ondelete='cascade',
-#                               required=True)
-#     parent_left = fields.Integer(_('Left Parent'), select=True)
-#     parent_right = fields.Integer(_('Right Parent'), select=True)
+    parent_id = fields.Many2one(string=u'Родительская категория', comodel_name='kraskolba.warehouse.goodscategory',
+                                ondelete='restrict')
+    parent_left = fields.Integer(_('Left Parent'), select=True)
+    parent_right = fields.Integer(_('Right Parent'), select=True)
+    subcategory_ids = fields.One2many(string=u'Подкатегория', comodel_name='kraskolba.warehouse.goodscategory', inverse_name='parent_id')
+
+    complete_name = fields.Char(string=u'Полное название', compute='_get_complete_name', search='_get_search_name')
+
+    name = fields.Char(string=u'Название', required=True, index=True, size=40)
+    code = fields.Char(string=u'Код', required=False, size=50)
+
+    @api.one
+    @api.depends('name', 'parent_id.name')
+    def _get_complete_name(self):
+        parents = self.env[self._name].search([
+            ('parent_left', '<=', self.parent_left),
+            ('parent_right', '>=', self.parent_right),
+        ])
+
+        self.complete_name = u' / '.join(x.name for x in parents)
+
+    def _get_search_name(self, operator, value):
+        if operator == 'ilike':
+            p_ids = self.search([('name', operator, value)])
+            return [('id', 'child_of', p_ids.ids)]
+        elif operator == 'not ilike':
+            p_ids = self.search([('name', 'ilike', value)])
+            matched_ids = self.search([('id', 'child_of', p_ids.ids)])
+            return [('id', 'not in', matched_ids.ids)]
+        elif operator == '=' and value is False:
+            return FALSE_DOMAIN
+        elif operator == '=' and value is True:
+            return TRUE_DOMAIN
+        elif operator == '!=' and value is False:
+            return TRUE_DOMAIN
+        elif operator == '!=' and value is True:
+            return FALSE_DOMAIN
+        elif operator in ['=', '!=']:
+            parts = value.split(u' / ')
+            ids = False
+
+            while parts:
+                part = parts.pop(0)
+
+                parent_domain = [('parent_id', '=', False)] if ids is False else [('parent_id', 'in', ids)]
+
+                ids = self.search([('name', '=', part)] + parent_domain).ids
+
+            ids = ids or []
+
+            if operator == '=':
+                return [('id', 'in', ids)]
+            else:
+                return [('id', 'not in', ids)]
+
+        raise ValueError('Invalid operator %s' % operator)

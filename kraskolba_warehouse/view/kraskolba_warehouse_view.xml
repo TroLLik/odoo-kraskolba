@@ -147,7 +147,7 @@
                             <!--<field name="state"/>-->
                             <!--<field name="fix_type"/>-->
                             <!--</tree>-->
-                        </field>>
+                        </field>
                     </group>
                 </form>
             </field>
@@ -218,6 +218,91 @@
         </record>
 
         <!-- goods -->
+
+        <!-- goodscategory -->
+        <record id="view_kraskolba_warehouse_goodscategory_tree" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.goodscategory.tree</field>
+            <field name="model">kraskolba.warehouse.goodscategory</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_kraskolba_warehouse_goodscategory_form" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.goodscategory.form</field>
+            <field name="model">kraskolba.warehouse.goodscategory</field>
+            <field name="arch" type="xml">
+                <form string="Данные склада">
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="parent_id"/>
+                    </group>
+                        <notebook>
+                            <page string="Подкатегории" name="subcategories">
+                                <field name="subcategory_ids" colspan="6" nolabel="1">
+                                    <tree name="active_subcategories_inline" editable="bottom" default_order="name">
+                                        <field name="name" />
+                                        <field name="code" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_kraskolba_warehouse_goodscategory" model="ir.actions.act_window">
+            <field name="name">Категории номенклатуры</field>
+            <field name="res_model">kraskolba.warehouse.goodscategory</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--tree as tree-->
+        <record id="view_kraskolba_warehouse_goodscategory_tree_as_tree" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.goodscategory.tree_as_tree</field>
+            <field name="model">kraskolba.warehouse.goodscategory</field>
+            <field name="field_parent">subcategory_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Классификатор категорий" version="8.0">
+                    <field name="complete_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_kraskolba_warehouse_goodscategory_tree_as_tree" model="ir.actions.act_window">
+            <field name="name">Категории номенклатуры (схема)</field>
+            <field name="res_model">kraskolba.warehouse.goodscategory</field>
+            <field name="view_type">tree</field>
+            <field name="view_id" ref="view_kraskolba_warehouse_goodscategory_tree_as_tree"/>
+            <field name="domain">[('parent_id','=',False)]</field>
+        </record>
+        <!--tree as tree-->
+
+        <record id="view_kraskolba_warehouse_goodscategory_search" model="ir.ui.view">
+            <field name="name">kraskolba_warehouse_goodscategory.search</field>
+            <field name="model">kraskolba.warehouse.goodscategory</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="complete_name"/>
+
+                    <separator/>
+
+                    <filter name="goodscategory_tree_root" string="Коренные" domain="[('parent_id', '=', False)]"/>
+
+                    <group string="Сгруппировать">
+                        <filter name="group_goodscategory_tree_by_parent" string="По родителю" context="{'group_by': 'parent_id'}"/>
+                    </group>
+
+                </search>
+            </field>
+        </record>
+
+        <!-- goodscategory -->
  
     </data>
 </openerp>
