@@ -18,14 +18,9 @@
                   action="action_kraskolba_warehouse_depot"
                   groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
 
-        <menuitem name="Список товаров" sequence="16" id="menu_kraskolba_warehouse_nomenclature"
+        <menuitem name="Номенклатура" sequence="16" id="menu_kraskolba_warehouse_nomenclature"
                   parent="menu_kraskolba_warehouse_directory"
                   action="action_kraskolba_warehouse_nomenclature"
-                  groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
-
-        <menuitem name="Список типов" sequence="17" id="menu_kraskolba_warehouse_goodtype"
-                  parent="menu_kraskolba_warehouse_directory"
-                  action="action_kraskolba_warehouse_goodtype"
                   groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
 
         <!-- Категории номенклатуры -->

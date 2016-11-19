@@ -26,58 +26,6 @@ class Depot(models.Model):
     description = fields.Text(string=u'Описание')
     is_returning = fields.Boolean(string=u'Возвратный склад')
 
-
-class GoodType(models.Model):
-    _name = 'kraskolba.warehouse.goodtype'
-    _rec_name = 'name'
-
-    name = fields.Char(string=u'Название', required=True, size=100)
-    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.goods', compute='_get_goods')
-    count = fields.Integer(string=u'Количество', compute='_count_goods')
-
-    @api.one
-    def _get_goods(self):
-        goods_ids = self.env['kraskolba.warehouse.goods'].search([('type', '=', self.id)])
-        if goods_ids:
-            self.goods = goods_ids
-        else:
-            self.goods = None
-
-    @api.one
-    def _count_goods(self):
-        self.count = len(self.goods)
-        # Подсчет количества единиц товаров
-        # self.count = sum(x.count for x in self.goods)
-
-
-class Goods(models.Model):
-    _name = 'kraskolba.warehouse.goods'
-    _rec_name = 'name'
-
-    name = fields.Char(string=u'Название', required=True, index=True, size=100)
-    type = fields.Many2one(string=u'Категория', comodel_name='kraskolba.warehouse.goodtype')
-    state = fields.Selection(STATES, default='status1', string=u'Статус товара')
-    price = fields.Float(default=0, string=u'Цена')
-    quantity = fields.Integer(default=1, string=u'Кол-во')
-    depot = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot',
-                            ondelete='restrict')
-    note = fields.Text(string=u'Примечание')
-
-    # Запрещаем вводить отрицательные числа в количество товара
-    @api.one
-    @api.constrains('quantity')
-    def _check_quantity(self):
-        if self.quantity < 0:
-            raise exceptions.ValidationError("Неверное значение.")
-
-    # Запрещаем вводить отрицательные числа в стоимость товара
-    @api.one
-    @api.constrains('price')
-    def _check_price(self):
-        if self.price < 0:
-            raise exceptions.ValidationError("Неверное значение.")
-
-
 # class Document(models.Model):
 #     _name = 'kraskolba.warehouse.doc'
 # в этой модели предпологается вести документы производящие движение товара

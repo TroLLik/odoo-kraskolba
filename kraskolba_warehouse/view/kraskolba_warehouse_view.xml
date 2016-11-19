@@ -113,59 +113,10 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <!-- depot -->
+        <!-- depot end-->
 
-        <!-- goodtype -->
-        <record id="view_kraskolba_warehouse_goodtype_tree" model="ir.ui.view">
-            <field name="name">kraskolba.warehouse.goodtype.tree</field>
-            <field name="model">kraskolba.warehouse.goodtype</field>
-            <field name="arch" type="xml">
-                <tree>
-                    <field name="name"/>
-                    <field name="count"/>
-                </tree>
-            </field>
-        </record>
 
-        <record id="view_kraskolba_warehouse_goodtype_form" model="ir.ui.view">
-            <field name="name">kraskolba.warehouse.goodtype.form</field>
-            <field name="model">kraskolba.warehouse.goodtype</field>
-            <field name="arch" type="xml">
-                <form string="Данные склада">
-                    <group>
-                        <field name="name"/>
-                        <field name="goods">
-                            <!--<tree string="Заказы">-->
-                            <!--<field name="id" string="№ заказа"/>-->
-                            <!--<field name="create_date" string="Дата принятия"/>-->
-                            <!--<field name="readydate"/>-->
-                            <!--<field name="issuedate"/>-->
-                            <!--<field name="estimatedreadydate"/>-->
-                            <!--<field name="serialnumber"/>-->
-                            <!--<field name="devmod"/>-->
-                            <!--<field name="pre_price"/>-->
-                            <!--<field name="real_price"/>-->
-                            <!--<field name="client"/>-->
-                            <!--<field name="client_tel_number" string="Номер клиента"/>-->
-                            <!--<field name="state"/>-->
-                            <!--<field name="fix_type"/>-->
-                            <!--</tree>-->
-                        </field>
-                    </group>
-                </form>
-            </field>
-        </record>
-
-        <record id="action_kraskolba_warehouse_goodtype" model="ir.actions.act_window">
-            <field name="name">Список категорий</field>
-            <field name="res_model">kraskolba.warehouse.goodtype</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-
-        <!-- goodtype -->
-
-        <!-- goods -->
+        <!-- nomenclature -->
         <record id="view_kraskolba_warehouse_nomenclature_tree" model="ir.ui.view">
             <field name="name">kraskolba.warehouse.nomenclature.tree</field>
             <field name="model">kraskolba.warehouse.nomenclature</field>
@@ -235,7 +186,7 @@
                     </field>
                 </record>
         -->
-        <!-- goods -->
+        <!-- nomenclature end -->
 
         <!-- goodscategory -->
         <record id="view_kraskolba_warehouse_goodscategory_tree" model="ir.ui.view">
@@ -299,7 +250,7 @@
             <field name="view_id" ref="view_kraskolba_warehouse_goodscategory_tree_as_tree"/>
             <field name="domain">[('parent_id','=',False)]</field>
         </record>
-        <!--tree as tree-->
+        <!--tree as tree end-->
 
         <record id="view_kraskolba_warehouse_goodscategory_search" model="ir.ui.view">
             <field name="name">kraskolba_warehouse_goodscategory.search</field>
@@ -320,7 +271,7 @@
             </field>
         </record>
 
-        <!-- goodscategory -->
+        <!-- goodscategory end-->
  
     </data>
 </openerp>
