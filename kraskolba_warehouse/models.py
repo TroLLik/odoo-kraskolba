@@ -19,17 +19,9 @@ class Depot(models.Model):
     _rec_name = 'name'
 
     name = fields.Char(string=u'Название', required=True, index=True, size=100)
-    serial_number = fields.Char(string=u'Сер. №', required=False, size=100)
-    address = fields.Char(string=u'Адрес', required=True, index=True, size=100)
-    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.goods', compute='_get_goods')
-
-    @api.one
-    def _get_goods(self):
-        goods_ids = self.env['kraskolba.warehouse.goods'].search([('depot', '=', self.id)])
-        if goods_ids:
-            self.goods = goods_ids
-        else:
-            self.goods = None
+    location = fields.Char(string=u'Расположение', required=False, size=255)
+    description = fields.Text(string=u'Описание')
+    is_returning = fields.Boolean(string=u'Возвратный склад')
 
 
 class GoodType(models.Model):
@@ -88,6 +80,20 @@ class Goods(models.Model):
 # в этой модели предпологается вести документы производящие движение товара
 
 
+class Price(models.Model):
+    _name = 'kraskolba.warehouse.price'
+
+    name = fields.Char(string=u'Название', size=100)
+    value = fields.Float(string=u'Цена', default=0)
+    nomenclature_id = fields.Many2one(string=u'Номенклатура', comodel_name='kraskolba.warehouse.nomenclature')
+
+    @api.one
+    @api.constrains('value')
+    def _check_price(self):
+        if self.value < 0:
+            raise exceptions.ValidationError(u"Цена не может быть меньше нуля.")
+
+
 class Employee(models.Model):
     _name = 'kraskolba.warehouse.employee'
     _rec_name = 'full_name'
@@ -136,11 +142,16 @@ class Nomenclature(models.Model):
     _name = 'kraskolba.warehouse.nomenclature'
     _rec_name = 'name'
 
+    _sql_constraints = [
+        ('article_idx', 'UNIQUE(article)', u'Такой артикул уже существует'),
+        ('code_idx', 'UNIQUE(code)', u'Такой код уже существует'),
+    ]
+
     name = fields.Char(string=u'Наименование', required=True, index=True, size=200)
     article = fields.Integer(string=u'Артикул')
     code = fields.Integer(string=u'Код')
-    unit = fields.Selection(string=u'Ед.измерения', selection=UNITS, default=UNITS[0][0], )
-    price = fields.Float(string=u'Цена', default=0)
+    unit = fields.Selection(string=u'Ед.измерения', selection=UNITS, default=UNITS[0][0], required=True)
+    price = fields.One2many(string=u'Цены', comodel_name='kraskolba.warehouse.price', inverse_name='nomenclature_id')
     quantity = fields.Integer(default=1, string=u'Количество')
     image = fields.Binary(string=u'Изображение', )
     tax = fields.Integer(string=u'Налог (%)', default=0)
@@ -155,15 +166,8 @@ class Nomenclature(models.Model):
     @api.one
     @api.constrains('quantity')
     def _check_quantity(self):
-        if self.quantity <= 0:
+        if self.quantity < 1:
             raise exceptions.ValidationError(u"Количество не может быть меньше единицы.")
-
-    # Запрещаем вводить отрицательные числа в стоимость товара
-    @api.one
-    @api.constrains('price')
-    def _check_price(self):
-        if self.price < 0:
-            raise exceptions.ValidationError(u"Цена не может быть меньше нуля.")
 
 
 class Supplier(models.Model):
