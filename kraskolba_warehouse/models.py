@@ -1,8 +1,8 @@
 # coding=utf-8 #
-from openerp import models, api, fields, exceptions, tools
+from odoo import models, api, fields, exceptions, tools
 
-from openerp.tools.translate import _
-from openerp.osv.expression import FALSE_DOMAIN, TRUE_DOMAIN
+from odoo.tools.translate import _
+from odoo.osv.expression import FALSE_DOMAIN, TRUE_DOMAIN
 
 STATES = [
     ('status1', "Статус1"),
