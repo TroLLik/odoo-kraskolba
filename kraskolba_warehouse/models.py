@@ -1,5 +1,5 @@
 # coding=utf-8 #
-from openerp import models, api, fields, exceptions
+from openerp import models, api, fields, exceptions, tools
 
 from openerp.tools.translate import _
 from openerp.osv.expression import FALSE_DOMAIN, TRUE_DOMAIN
@@ -26,6 +26,7 @@ class Depot(models.Model):
     description = fields.Text(string=u'Описание')
     is_returning = fields.Boolean(string=u'Возвратный склад')
 
+
 # class Document(models.Model):
 #     _name = 'kraskolba.warehouse.doc'
 # в этой модели предпологается вести документы производящие движение товара
@@ -34,8 +35,8 @@ class Depot(models.Model):
 class Price(models.Model):
     _name = 'kraskolba.warehouse.price'
 
-    name = fields.Char(string=u'Название', size=100)
-    value = fields.Float(string=u'Цена', default=0)
+    name = fields.Char(string=u'Название', size=100, required=True)
+    value = fields.Float(string=u'Цена', default=0, required=True)
     nomenclature_id = fields.Many2one(string=u'Номенклатура', comodel_name='kraskolba.warehouse.nomenclature')
 
     @api.one
@@ -184,22 +185,53 @@ class Nomenclature(models.Model):
     code = fields.Integer(string=u'Код')
     unit = fields.Selection(string=u'Ед.измерения', selection=UNITS, default=UNITS[0][0], required=True)
     price = fields.One2many(string=u'Цены', comodel_name='kraskolba.warehouse.price', inverse_name='nomenclature_id')
-    quantity = fields.Integer(default=1, string=u'Количество')
     image = fields.Binary(string=u'Изображение', )
+    image_medium = fields.Binary(compute='_compute_image_medium', inverse='_inverse_image_medium', store=True)
     tax = fields.Integer(string=u'Налог (%)', default=0)
     discount = fields.Integer(string=u'Скидка (%)', default=0)
     description = fields.Text(string=u'Описание')
     comment = fields.Char(string=u'Комментарий', size=300)
     supplier = fields.Many2one(string=u'Поставщик', comodel_name='kraskolba.warehouse.supplier')
     manufacturer = fields.Many2one(string=u'Производитель', comodel_name='kraskolba.warehouse.manufacturer')
+    category = fields.Many2one(string=u'Категория', comodel_name='kraskolba.warehouse.goodscategory', required=True)
 
-    category = fields.Many2one(string=u'Категория', comodel_name='kraskolba.warehouse.goodscategory')
+    @api.multi
+    @api.depends('image')
+    def _compute_image_medium(self):
+        self.image_medium = tools.image_resize_image_medium(self.image)
+
+    @api.one
+    @api.depends('image_medium')
+    def _inverse_image_medium(self):
+        self.image = tools.image_resize_image_big(self.image_medium)
+
+
+class DocumentGoods(models.Model):
+    _name = 'kraskolba.warehouse.document.goods'
+
+    nomenclature = fields.Many2one(string=u'Товар', comodel_name='kraskolba.warehouse.nomenclature', required=True)
+    quantity = fields.Integer(default=1, string=u'Количество', required=True)
+    document_id = fields.Many2one(string=u'Документ', comodel_name='kraskolba.warehouse.document')
 
     @api.one
     @api.constrains('quantity')
     def _check_quantity(self):
         if self.quantity < 1:
             raise exceptions.ValidationError(u"Количество не может быть меньше единицы.")
+
+
+class Document(models.Model):
+    _name = 'kraskolba.warehouse.document'
+    _rec_name = 'name'
+
+    name = fields.Char(string=u'Название документа', size=100)
+    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.document.goods',
+                            inverse_name='document_id', ondelete='cascade')
+    goods_count = fields.Integer(string=u'Количество товаров', compute='get_goods_count')
+
+    @api.one
+    def get_goods_count(self):
+        return len(self.goods.ids) or 0
 
 
 class Supplier(models.Model):

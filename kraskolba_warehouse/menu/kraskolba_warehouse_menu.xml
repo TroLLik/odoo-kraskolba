@@ -23,6 +23,11 @@
                   action="action_kraskolba_warehouse_nomenclature"
                   groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
 
+        <menuitem name="Документы" sequence="16" id="menu_kraskolba_warehouse_document"
+                  parent="menu_kraskolba_warehouse_directory"
+                  action="action_kraskolba_warehouse_document"
+                  groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
+
         <!-- Категории номенклатуры -->
 
         <menuitem name="Категории номенклатуры" sequence="18" id="menu_kraskolba_warehouse_category" parent="menu_kraskolba_warehouse_root"
