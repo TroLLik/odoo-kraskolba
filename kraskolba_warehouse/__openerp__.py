@@ -23,9 +23,6 @@
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'web'],
-    # 'depends': ['base', 'web', 'kraskolba_base'],
-    # 'depends': ['base', 'web', 'kraskolba_base', 'report_aeroo'],
-    #'depends': ['base', 'web', 'kraskolba_base', 'report_aeroo', 'cron'],
 
     # always loaded
     'data': [

@@ -103,8 +103,8 @@ class GoodsCategory(models.Model):
 
     parent_id = fields.Many2one(string=u'Родительская категория', comodel_name='kraskolba.warehouse.goodscategory',
                                 ondelete='restrict')
-    parent_left = fields.Integer(_('Left Parent'), select=True)
-    parent_right = fields.Integer(_('Right Parent'), select=True)
+    parent_left = fields.Integer(_('Left Parent'), index=True)
+    parent_right = fields.Integer(_('Right Parent'), index=True)
     subcategory_ids = fields.One2many(string=u'Подкатегория', comodel_name='kraskolba.warehouse.goodscategory',
                                       inverse_name='parent_id')
 

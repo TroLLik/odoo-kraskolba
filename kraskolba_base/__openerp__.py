@@ -19,7 +19,7 @@
 
     'sequence': 1,
 
-    'auto_install': True,
+    'auto_install': False,
 
     # any module necessary for this one to work correctly
     'depends': ['base'],
