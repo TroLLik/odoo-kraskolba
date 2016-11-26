@@ -1,6 +1,6 @@
 # coding=utf-8
-from openerp import models, tools
-from openerp.tools.safe_eval import safe_eval as eval
+from odoo import models, tools
+from odoo.tools.safe_eval import safe_eval as eval
 
 import logging
 
