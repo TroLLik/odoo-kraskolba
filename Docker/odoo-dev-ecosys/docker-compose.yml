@@ -5,22 +5,22 @@ services:
     ports:
      - 8069:8069
     volumes:
-     - /home/troll/odoo-kraskolba:/mnt/proj:ro
-     - /home/troll/odoo-kraskolba/Docker/odoo-dev-ecosys/odoo-app/odoo.conf:/etc/odoo.conf:ro
+     - /home/sudoguy/Github/odoo-kraskolba:/mnt/proj:ro
+     - /home/sudoguy/Github/odoo-kraskolba/Docker/odoo-dev-ecosys/odoo-app/odoo.conf:/etc/odoo.conf:ro
      - /tmp/odoo-log:/mnt/log:rw
     links:
-     - pg:pg
+     - pg1:pg
     command: /start
     depends_on:
-     - pg
-     - pgadm4
-  pg:
+     - pg1
+#     - pgadm4
+  pg1:
      build: ./pgsql
-  pgadm4:
-     image: fenglc/pgadmin4
-     volumes:
-      - /opt/docker/pgadmin4/.pgadmin:/root/.pgadmin:rw
-     ports:
-      - 5050:5050
-     links:
-      - pg:pg
+#  pgadm4:
+#     image: fenglc/pgadmin4
+#     volumes:
+#      - /opt/docker/pgadmin4/.pgadmin:/root/.pgadmin:rw
+#     ports:
+#      - 5050:5050
+#     links:
+#      - pg:pg

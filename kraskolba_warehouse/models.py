@@ -231,7 +231,7 @@ class Document(models.Model):
 
     @api.one
     def get_goods_count(self):
-        return len(self.goods.ids) or 0
+        return len(self.goods) or 0
 
 
 class Supplier(models.Model):

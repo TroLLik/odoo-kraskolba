@@ -39,7 +39,7 @@ RUN set -x; \
 ENV    DEBIAN_FRONTEND noninteractive
 
 #clone odoo
-RUN git clone https://www.github.com/odoo/odoo --depth 1 --branch 8.0 --single-branch /opt/odoo
+RUN git clone https://www.github.com/odoo/odoo --depth 1 --branch 10.0 --single-branch /opt/odoo
 
 VOLUME ["/mnt/proj", "/mnt/log"]
 
@@ -52,12 +52,12 @@ RUN chown -R odoo:odoo /mnt/proj
 RUN chown -R odoo:odoo /mnt/log
 
 #clone external odoo deps
-RUN git clone https://github.com/aeroo/aeroo_reports.git /opt/ext_addons/aeroo_reports
-RUN git clone https://github.com/aeroo/aeroolib.git /opt/ext_addons/aeroolib
+#RUN git clone https://github.com/aeroo/aeroo_reports.git /opt/ext_addons/aeroo_reports
+#RUN git clone https://github.com/aeroo/aeroolib.git /opt/ext_addons/aeroolib
 #RUN git clone https://github.com/codup/odoo-tools.git --depth 1 --branch 8.0 --single-branch /opt/ext_addons/codup
 
 #setup odoo aeroolib
-RUN cd /opt/ext_addons/aeroolib/ && python setup.py install
+#RUN cd /opt/ext_addons/aeroolib/ && python setup.py install
 
 #install pwgen for python
 RUN pip install pwgen

@@ -4,9 +4,9 @@
         <menuitem name="Склад" id="menu_kraskolba_warehouse_root" sequence="7"/>
 
         <!-- Отдел продаж -->
-        
-        <menuitem name="Склады" sequence="10" id="menu_kraskolba_warehouse_depots" parent="menu_kraskolba_warehouse_root"
-                  action="base.grant_menu_access"/>
+
+        <menuitem name="Склады" sequence="10" id="menu_kraskolba_warehouse_depots"
+                  parent="menu_kraskolba_warehouse_root"/>
 
 
         <!-- Справочники -->
