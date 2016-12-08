@@ -8,3 +8,5 @@
 *.orig
 *.py[cdo]
 *.swp
+/Docker/
+/odoo
