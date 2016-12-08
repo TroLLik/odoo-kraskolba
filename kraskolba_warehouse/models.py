@@ -4,12 +4,6 @@ from odoo import models, api, fields, exceptions, tools
 from odoo.tools.translate import _
 from odoo.osv.expression import FALSE_DOMAIN, TRUE_DOMAIN
 
-STATES = [
-    ('status1', "Статус1"),
-    ('status2', "Статус2"),
-    ('status3', "Статус3"),
-]
-
 UNITS = [
     ('units', u"шт"),
     ('meters', u"метров"),
@@ -35,9 +29,9 @@ class Depot(models.Model):
 class Price(models.Model):
     _name = 'kraskolba.warehouse.price'
 
-    name = fields.Char(string=u'Название', size=100, required=True)
-    value = fields.Float(string=u'Цена', default=0, required=True)
     nomenclature_id = fields.Many2one(string=u'Номенклатура', comodel_name='kraskolba.warehouse.nomenclature')
+    name = fields.Char(string=u'Название', size=100, required=True)
+    value = fields.Float(string=u'Цена', digits=[7, 2], default=0, required=True, )
 
     @api.one
     @api.constrains('value')
@@ -181,8 +175,8 @@ class Nomenclature(models.Model):
     ]
 
     name = fields.Char(string=u'Наименование', required=True, index=True, size=200)
-    article = fields.Integer(string=u'Артикул')
-    code = fields.Integer(string=u'Код')
+    article = fields.Char(string=u'Артикул')
+    code = fields.Char(string=u'Код')
     unit = fields.Selection(string=u'Ед.измерения', selection=UNITS, default=UNITS[0][0], required=True)
     price = fields.One2many(string=u'Цены', comodel_name='kraskolba.warehouse.price', inverse_name='nomenclature_id')
     image = fields.Binary(string=u'Изображение', )
@@ -191,7 +185,6 @@ class Nomenclature(models.Model):
     discount = fields.Integer(string=u'Скидка (%)', default=0)
     description = fields.Text(string=u'Описание')
     comment = fields.Char(string=u'Комментарий', size=300)
-    supplier = fields.Many2one(string=u'Поставщик', comodel_name='kraskolba.warehouse.supplier')
     manufacturer = fields.Many2one(string=u'Производитель', comodel_name='kraskolba.warehouse.manufacturer')
     category = fields.Many2one(string=u'Категория', comodel_name='kraskolba.warehouse.goodscategory', required=True)
 
@@ -206,32 +199,56 @@ class Nomenclature(models.Model):
         self.image = tools.image_resize_image_big(self.image_medium)
 
 
-class DocumentGoods(models.Model):
-    _name = 'kraskolba.warehouse.document.goods'
+class Document(models.Model):
+    _name = 'kraskolba.warehouse.document'
+    _rec_name = 'name'
+
+    name = fields.Char(string=u'Название документа', size=100)
+
+
+class DocumentReception(Document):
+    _name = 'kraskolba.warehouse.document.reception'
+    _rec_name = 'name'
+
+    STATES = [
+        ('draft', u'Заявочка'),
+        ('accepted', u'Принято'),
+    ]
+
+    name = fields.Char(string=u'Название документа', size=100, required=True)
+    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.document.reception.goods',
+                            inverse_name='document_id', ondelete='cascade', required=True)
+    goods_count = fields.Integer(string=u'Количество товаров', compute='get_goods_count')
+    state = fields.Selection(string=u'Статус', selection=STATES, default='draft')
+
+    @api.one
+    def accepted_state(self):
+        self.state = 'accepted'
+
+    @api.one
+    def draft_state(self):
+        self.state = 'draft'
+
+    @api.one
+    def get_goods_count(self):
+        self.goods_count = len(self.goods.ids)
+
+
+class DocumentReceptionGoods(models.Model):
+    _name = 'kraskolba.warehouse.document.reception.goods'
 
     nomenclature = fields.Many2one(string=u'Товар', comodel_name='kraskolba.warehouse.nomenclature', required=True)
     quantity = fields.Integer(default=1, string=u'Количество', required=True)
-    document_id = fields.Many2one(string=u'Документ', comodel_name='kraskolba.warehouse.document')
+    price = fields.Float(default=0, digits=[6, 2], string=u'Входная цена', required=True)
+    document_id = fields.Many2one(string=u'Документ', comodel_name='kraskolba.warehouse.document.reception')
+    depot_id = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot', required=True)
+    supplier_id = fields.Many2one(string=u'Поставщик', comodel_name='kraskolba.warehouse.supplier', required=True)
 
     @api.one
     @api.constrains('quantity')
     def _check_quantity(self):
         if self.quantity < 1:
             raise exceptions.ValidationError(u"Количество не может быть меньше единицы.")
-
-
-class Document(models.Model):
-    _name = 'kraskolba.warehouse.document'
-    _rec_name = 'name'
-
-    name = fields.Char(string=u'Название документа', size=100)
-    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.document.goods',
-                            inverse_name='document_id', ondelete='cascade')
-    goods_count = fields.Integer(string=u'Количество товаров', compute='get_goods_count')
-
-    @api.one
-    def get_goods_count(self):
-        return len(self.goods) or 0
 
 
 class Supplier(models.Model):

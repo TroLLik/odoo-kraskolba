@@ -59,29 +59,43 @@
         </record>
         <!--employee end-->
 
-        <!-- document begin-->
-        <record id="view_kraskolba_warehouse_document_tree" model="ir.ui.view">
-            <field name="name">kraskolba.warehouse.document.tree</field>
-            <field name="model">kraskolba.warehouse.document</field>
+        <!-- document reception begin-->
+        <record id="view_kraskolba_warehouse_document_reception_tree" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.document..receptiontree</field>
+            <field name="model">kraskolba.warehouse.document.reception</field>
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
                     <field name="goods_count"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
 
-        <record id="view_kraskolba_warehouse_document_form" model="ir.ui.view">
-            <field name="name">kraskolba.warehouse.document.form</field>
-            <field name="model">kraskolba.warehouse.document</field>
+        <record id="view_kraskolba_warehouse_document_reception_form" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.document.reception.form</field>
+            <field name="model">kraskolba.warehouse.document.reception</field>
             <field name="arch" type="xml">
                 <form string="Данные документа">
+                    <header style="padding:2px 0;">
+                        <button string="Принять товарчики" type="object" class="oe_highlight" name="accepted_state"
+                                attrs="{'invisible': [('state','!=','draft')]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
                     <group>
-                        <field name="name"/>
-                        <field name="goods">
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <field name="goods" nolabel="1" colspan="2">
                             <tree editable="bottom">
-                                <field name="nomenclature" style="width:75%%"/>
-                                <field name="quantity" style="width:25%%"/>
+                                <field name="nomenclature"/>
+                                <field name="supplier_id"/>
+                                <field name="quantity"/>
+                                <field name="price"/>
+                                <field name="depot_id"/>
                             </tree>
                         </field>
                     </group>
@@ -89,14 +103,14 @@
             </field>
         </record>
 
-        <record id="action_kraskolba_warehouse_document" model="ir.actions.act_window">
-            <field name="name">Список документов</field>
-            <field name="res_model">kraskolba.warehouse.document</field>
+        <record id="action_kraskolba_warehouse_document_reception" model="ir.actions.act_window">
+            <field name="name">Прием товара</field>
+            <field name="res_model">kraskolba.warehouse.document.reception</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <!-- document end-->
+        <!-- document reception end-->
 
         <!-- depot -->
         <record id="view_kraskolba_warehouse_depot_tree" model="ir.ui.view">
@@ -183,24 +197,27 @@
                         </h1>
                     </div>
                     <group col="4">
-                        <field name="supplier" string="Поставщик"/>
-                        <field name="manufacturer" string="Производитель"/>
                         <field name="article"/>
+                        <field name="manufacturer" string="Производитель"/>
                         <field name="code"/>
                     </group>
-                    <group>
+                    <group col="4">
                         <field name="tax"/>
+                        <field name="unit"/>
                         <field name="discount"/>
-                        <field name="price">
+                        <field name="category"/>
+                    </group>
+                    <group string="Стоимость">
+                        <field name="price" nolabel="1" colspan="2">
                             <tree editable="bottom">
                                 <field name="name"/>
                                 <field name="value"/>
                             </tree>
                         </field>
-                        <field name="unit"/>
+                    </group>
+                    <group>
                         <field name="description"/>
                         <field name="comment"/>
-                        <field name="category"/>
                     </group>
                 </form>
             </field>
