@@ -136,23 +136,12 @@
                             <field name="location"/>
                             <field name="is_returning"/>
                             <field name="description"/>
-                            <!--<field name="goods">-->
-                            <!--<tree string="Заказы">-->
-                            <!--<field name="id" string="№ заказа"/>-->
-                            <!--<field name="create_date" string="Дата принятия"/>-->
-                            <!--<field name="readydate"/>-->
-                            <!--<field name="issuedate"/>-->
-                            <!--<field name="estimatedreadydate"/>-->
-                            <!--<field name="serialnumber"/>-->
-                            <!--<field name="devmod"/>-->
-                            <!--<field name="pre_price"/>-->
-                            <!--<field name="real_price"/>-->
-                            <!--<field name="client"/>-->
-                            <!--<field name="client_tel_number" string="Номер клиента"/>-->
-                            <!--<field name="state"/>-->
-                            <!--<field name="fix_type"/>-->
-                            <!--</tree>-->
-                            <!--</field>-->
+                            <field name="goods">
+                                <tree string="Товары">
+                                    <field name="nomenclature_id"/>
+                                    <field name="serial_code"/>
+                                </tree>
+                            </field>
                         </group>
                     </sheet>
                 </form>

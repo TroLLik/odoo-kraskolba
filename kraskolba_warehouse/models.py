@@ -19,6 +19,15 @@ class Depot(models.Model):
     location = fields.Char(string=u'Расположение', required=False, size=255)
     description = fields.Text(string=u'Описание')
     is_returning = fields.Boolean(string=u'Возвратный склад')
+    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.goods', compute='_get_goods')
+
+    @api.one
+    def _get_goods(self):
+        goods_ids = self.env['kraskolba.warehouse.goods'].search([('depot_id', '=', self.id)])
+        if goods_ids:
+            self.goods = goods_ids
+        else:
+            self.goods = None
 
 
 # class Document(models.Model):
