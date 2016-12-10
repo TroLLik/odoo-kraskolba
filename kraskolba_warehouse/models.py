@@ -278,8 +278,8 @@ class Supplier(models.Model):
     _name = 'kraskolba.warehouse.supplier'
     _rec_name = 'full_name'
 
-    name = fields.Char(string=u'ФИО', size=255)
-    organization = fields.Char(string=u'Организация', size=255)
+    name = fields.Char(string=u'ФИО', size=255, required=True)
+    organization = fields.Char(string=u'Организация', size=255, required=True)
     full_name = fields.Char(string=u'Организация+ФИО', size=510, compute='get_full_name')
 
     def get_full_name(self):
@@ -290,8 +290,8 @@ class Manufacturer(models.Model):
     _name = 'kraskolba.warehouse.manufacturer'
     _rec_name = 'full_name'
 
-    name = fields.Char(string=u'ФИО', size=255)
-    organization = fields.Char(string=u'Организация', size=255)
+    name = fields.Char(string=u'ФИО', size=255, required=True)
+    organization = fields.Char(string=u'Организация', size=255, required=True)
     full_name = fields.Char(string=u'Организация+ФИО', size=510, compute='get_full_name')
 
     def get_full_name(self):
