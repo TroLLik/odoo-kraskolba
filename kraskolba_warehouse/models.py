@@ -255,6 +255,12 @@ class DocumentReception(Document):
     def get_goods_count(self):
         self.goods_count = len(self.goods.ids)
 
+    @api.one
+    @api.constrains('goods')
+    def _check_price(self):
+        if len(self.goods) < 1:
+            raise exceptions.ValidationError(u"Добавьте товары!")
+
 
 class DocumentReceptionGoods(models.Model):
     _name = 'kraskolba.warehouse.document.reception.goods'
