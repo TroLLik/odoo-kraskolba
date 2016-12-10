@@ -30,6 +30,12 @@
         'security/ir.model.access.csv',
         'view/kraskolba_warehouse_view.xml',
         'menu/kraskolba_warehouse_menu.xml',
-#        'reports/kraskolba_warehouse_report.xml',
+        'reports/kraskolba_warehouse_report.xml',
+        'reports/templates/nomenclature_report.xml',
+    ],
+
+    # demo data
+    'demo': [
+        'data/demo.xml',
     ],
 }
