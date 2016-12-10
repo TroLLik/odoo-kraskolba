@@ -3,12 +3,6 @@
     <data>
         <menuitem name="Склад" id="menu_kraskolba_warehouse_root" sequence="7"/>
 
-        <!-- Отдел продаж -->
-
-        <menuitem name="Склады" sequence="10" id="menu_kraskolba_warehouse_depots"
-                  parent="menu_kraskolba_warehouse_root"/>
-
-
         <!-- Справочники -->
 
         <menuitem name="Справочники" sequence="15" id="menu_kraskolba_warehouse_directory" parent="menu_kraskolba_warehouse_root"/>
@@ -31,6 +25,11 @@
                   parent="menu_kraskolba_warehouse_category_documents"
                   action="action_kraskolba_warehouse_document_reception"
                   groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
+
+        <!-- Товары -->
+        <menuitem name="Товары" sequence="16" id="menu_kraskolba_warehouse_goods"
+                  parent="menu_kraskolba_warehouse_directory"
+                  action="action_kraskolba_warehouse_goods"/>
 
         <!-- Категории номенклатуры -->
 

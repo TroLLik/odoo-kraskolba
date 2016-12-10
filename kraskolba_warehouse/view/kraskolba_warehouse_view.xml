@@ -168,6 +168,45 @@
 
         <!-- depot end-->
 
+        <!-- goods -->
+        <record id="view_kraskolba_warehouse_goods_tree" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.goods.tree</field>
+            <field name="model">kraskolba.warehouse.goods</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="nomenclature_id"/>
+                    <field name="serial_code"/>
+                    <field name="depot_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_kraskolba_warehouse_goods_form" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.goods.form</field>
+            <field name="model">kraskolba.warehouse.goods</field>
+            <field name="arch" type="xml">
+                <form string="Данные товара">
+                    <sheet>
+                        <group>
+                            <field name="nomenclature_id"/>
+                            <field name="serial_code"/>
+                            <field name="depot_id"/>
+                            <field name="comment"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_kraskolba_warehouse_goods" model="ir.actions.act_window">
+            <field name="name">Список товаров</field>
+            <field name="res_model">kraskolba.warehouse.goods</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- goods end-->
+
 
         <!-- nomenclature -->
         <record id="view_kraskolba_warehouse_nomenclature_tree" model="ir.ui.view">

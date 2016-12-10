@@ -199,6 +199,18 @@ class Nomenclature(models.Model):
         self.image = tools.image_resize_image_big(self.image_medium)
 
 
+class Goods(models.Model):
+    _name = 'kraskolba.warehouse.goods'
+    _rec_name = 'nomenclature_id'
+
+    nomenclature_id = fields.Many2one(string=u'Номенклатура', comodel_name='kraskolba.warehouse.nomenclature')
+    depot_id = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot')
+    serial_code = fields.Char(string=u'Серийный код')
+    comment = fields.Char(string=u'Комментарий')
+    document_goods_id = fields.Many2one(string=u'Товар в документе',
+                                        comodel_name='kraskolba.warehouse.document.reception.goods')
+
+
 class Document(models.Model):
     _name = 'kraskolba.warehouse.document'
     _rec_name = 'name'
@@ -224,6 +236,16 @@ class DocumentReception(Document):
     @api.one
     def accepted_state(self):
         self.state = 'accepted'
+        goods_model = self.env['kraskolba.warehouse.goods']
+        for good in self.goods:
+            for _ in range(good.quantity):
+                goods_model.create({
+                    'nomenclature_id': good.nomenclature.id,
+                    'depot_id': good.depot_id.id,
+                    'serial_code': '123',
+                    'comment': '',
+                    'document_goods_id': good.id
+                })
 
     @api.one
     def draft_state(self):
@@ -243,6 +265,7 @@ class DocumentReceptionGoods(models.Model):
     document_id = fields.Many2one(string=u'Документ', comodel_name='kraskolba.warehouse.document.reception')
     depot_id = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot', required=True)
     supplier_id = fields.Many2one(string=u'Поставщик', comodel_name='kraskolba.warehouse.supplier', required=True)
+    goods_id = fields.Many2one(string=u'Товар на складе', comodel_name='kraskolba.warehouse.goods')
 
     @api.one
     @api.constrains('quantity')
