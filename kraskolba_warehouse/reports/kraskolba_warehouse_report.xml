@@ -19,13 +19,6 @@
         <!--<report id="report_nomenclature_card_id" model="kraskolba.warehouse.nomenclature" name="nomenclature_card" string="Карточка номенклатуры" />-->
 
         <template id="report.kraskolba_warehouse_nomenclature_template_report">
-            <!--<t t-call="report.html_container">-->
-            <!--<t t-call="report.internal_layout">-->
-            <!--<div class="page">-->
-            <!--<p>AAAAAAAAAAAAAAAAAAAZZZZZZZZZZZZAAAAAAAAAZZZZZZZAAAAAAAAA.</p>-->
-            <!--</div>-->
-            <!--</t>-->
-            <!--</t>-->
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="report.external_layout">
@@ -34,6 +27,15 @@
                             <p>Имя объекта:
                                 <span t-field="o.name"/>
                             </p>
+                            <div class="col-xs-4 col-xs-offset-3">
+
+                                        <strong text-align="right">Картинка</strong>
+
+                                        <span t-field="o.image"
+
+                            t-field-options='{"widget": "image","class": "oe_avatar"}' />
+
+                            </div>
                         </div>
                     </t>
                 </t>
