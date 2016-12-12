@@ -8,8 +8,8 @@
         Модуль для управления складом kraskolba
     """,
 
-    'author': "TroLL",
-    'website': "http://www.kraskolba.ru",
+    'author': "gravicap software development",
+    'website': "http://www.erp.kraskolba.ru",
     'license ': 'Proprietary',
 
     'application': True,

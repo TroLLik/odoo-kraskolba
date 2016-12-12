@@ -18,22 +18,33 @@
 
         <!--<report id="report_nomenclature_card_id" model="kraskolba.warehouse.nomenclature" name="nomenclature_card" string="Карточка номенклатуры" />-->
 
-        <template id="kraskolba_warehouse_nomenclature_template_report">
+        <template id="report.kraskolba_warehouse_nomenclature_template_report">
+            <!--<t t-call="report.html_container">-->
+            <!--<t t-call="report.internal_layout">-->
+            <!--<div class="page">-->
+            <!--<p>AAAAAAAAAAAAAAAAAAAZZZZZZZZZZZZAAAAAAAAAZZZZZZZAAAAAAAAA.</p>-->
+            <!--</div>-->
+            <!--</t>-->
+            <!--</t>-->
             <t t-call="report.html_container">
-                <t t-call="report.internal_layout">
-                    <div class="page">
-                        <p>AAAAAAAAAAAAAAAAAAAZZZZZZZZZZZZAAAAAAAAAZZZZZZZAAAAAAAAA.</p>
-                    </div>
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <h2>Это заголовок</h2>
+                            <p>Имя объекта:
+                                <span t-field="o.name"/>
+                            </p>
+                        </div>
+                    </t>
                 </t>
             </t>
         </template>
 
         <report id="kraskolba_warehouse_nomenclature_action_report"
-            model="kraskolba.warehouse.nomenclature"
-            name="kraskolba.warehouse.kraskolba_warehouse_nomenclature_template_report"
-            file="kraskolba.warehouse.kraskolba_warehouse_nomenclature_template_report"
-            string="Azazazaza"
-            report_type="qweb-pdf"/>
-
+                model="kraskolba.warehouse.nomenclature"
+                name="report.kraskolba_warehouse_nomenclature_template_report"
+                file="report.kraskolba_warehouse_nomenclature_template_report"
+                string="Отчёт по номенклатуре"
+                report_type="qweb-pdf"/>
     </data>
 </openerp>

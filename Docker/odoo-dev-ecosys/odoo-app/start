@@ -1,3 +1,0 @@
-#!/bin/bash
-
-/opt/odoo/odoo-bin --config /etc/odoo.conf
