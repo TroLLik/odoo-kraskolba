@@ -22,16 +22,18 @@
     'auto_install': False,
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'report', 'web'],
 
     # always loaded
     'data': [
-        'security/security.xml',
-        'security/ir.model.access.csv',
+        # 'security/security.xml',
+        # 'security/ir.model.access.csv',
+
         'view/kraskolba_warehouse_view.xml',
         'menu/kraskolba_warehouse_menu.xml',
+
         'reports/kraskolba_warehouse_report.xml',
-        'reports/templates/nomenclature_report.xml',
+        # 'reports/nomenclature_report.xml',
     ],
 
     # demo data

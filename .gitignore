@@ -9,4 +9,4 @@
 *.py[cdo]
 *.swp
 /Docker/
-/odoo
+/odoo/

@@ -66,7 +66,6 @@ class Employee(models.Model):
     #    create_order = fields.One2many(comodel_name='kraskolba.warehouse.order', inverse_name='create_maker', ondelete='restrict')
     #    order_executive_engineer = fields.One2many(string=u'Заказы', comodel_name='kraskolba.warehouse.order', inverse_name='executive_engineer', ondelete='restrict')
 
-
     @api.one
     @api.depends('last_name', 'first_name', 'middle_name')
     def _full_name(self):

@@ -61,7 +61,7 @@
 
         <!-- document reception begin-->
         <record id="view_kraskolba_warehouse_document_reception_tree" model="ir.ui.view">
-            <field name="name">kraskolba.warehouse.document..receptiontree</field>
+            <field name="name">kraskolba.warehouse.document..reception.tree</field>
             <field name="model">kraskolba.warehouse.document.reception</field>
             <field name="arch" type="xml">
                 <tree>
@@ -109,7 +109,6 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-
         <!-- document reception end-->
 
         <!-- depot -->

@@ -1,10 +1,10 @@
 # My Odoo Dockerfile
 # VERSION 0.1
-# AUTHOR:           TroLL <z@kspu.ru>
+# AUTHOR:       TroLL <z@kspu.ru>
 # DESCRIPTION:  Image for Odoo
-# TO_BUILD:            eatmydata docker build --tag=prod/kkolba-odoo-v0.1 .
-# TO_RUN:               docker run -d -p 8069 --restart=always --name kkolba-odoo-prox -v=/opt/docker/kkolba-odoo/odoo-kraskolba:/mnt/proj:ro -v=/opt/docker/kkolba-odoo/log:/mnt/log:rw -v=/opt/docker/kkolba-odoo/odoo.conf:/etc/odoo.conf:ro prod/kkolba-odoo-v0.1 /start
-# TO_PROX_RUN:   sudo docker run -d --restart=always --name kkolba-odoo-prox -v=/opt/docker/kkolba-odoo/odoo-kraskolba:/mnt/proj:ro -v=/opt/docker/kkolba-odoo/log:/mnt/log:rw -v=/opt/docker/kkolba-odoo/odoo.conf:/etc/odoo.conf:ro prod/kkolba-odoo-v0.1 /start
+# TO_BUILD:     eatmydata docker build --tag=prod/kkolba-odoo-v0.1 .
+# TO_RUN:       docker run -d -p 8069 --restart=always --name kkolba-odoo-prox -v=/opt/docker/kkolba-odoo/odoo-kraskolba:/mnt/proj:ro -v=/opt/docker/kkolba-odoo/log:/mnt/log:rw -v=/opt/docker/kkolba-odoo/odoo.conf:/etc/odoo.conf:ro prod/kkolba-odoo-v0.1 /start
+# TO_PROX_RUN:  docker run -d --restart=always --name kkolba-odoo-prox -v=/opt/docker/kkolba-odoo/odoo-kraskolba:/mnt/proj:ro -v=/opt/docker/kkolba-odoo/log:/mnt/log:rw -v=/opt/docker/kkolba-odoo/odoo.conf:/etc/odoo.conf:ro prod/kkolba-odoo-v0.1 /start
 
 FROM ubuntu:14.04
 MAINTAINER TroLL <z@kspu.ru>
@@ -38,11 +38,9 @@ RUN set -x; \
 # Make sure we don't get notifications we can't answer during building.
 ENV    DEBIAN_FRONTEND noninteractive
 
-#clone odoo
-RUN git clone https://www.github.com/odoo/odoo --depth 1 --branch 10.0 --single-branch /opt/odoo
-
 VOLUME ["/mnt/proj", "/mnt/log"]
 
+RUN mkdir -p /opt/odoo
 #add user odoo
 RUN adduser --system --home=/opt/odoo -u 1488 --group odoo
 
@@ -66,12 +64,16 @@ RUN pip install pwgen
 EXPOSE 8069
 
 # Copy start script
-COPY ./start /
+#COPY ./start /
 
 # Fix exec permission
-RUN chmod +x /start
+#RUN chmod +x /start
 
 # Set default user when running the container
 USER odoo
 
-CMD ["/start"]
+#clone odoo
+RUN git clone https://www.github.com/odoo/odoo --depth 1 --branch 10.0 --single-branch /opt/odoo
+
+#CMD ["/start"]
+CMD ["/opt/odoo/odoo-bin", "--config", "/etc/odoo.conf"]

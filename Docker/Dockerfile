@@ -2,9 +2,9 @@
 # VERSION 0.1
 # AUTHOR:         TroLL <z@kspu.ru>
 # DESCRIPTION:    Image for Odoo
-# TO_BUILD:       sudo eatmydata docker build --tag=prod/kkolba-odoo-v0.1 .
-# TO_RUN:         sudo docker run -d -p 8069 --restart=always --name kkolba-odoo-prox -v=/opt/docker/kkolba-odoo/odoo-kraskolba:/mnt/proj:ro -v=/opt/docker/kkolba-odoo/log:/mnt/log:rw -v=/opt/docker/kkolba-odoo/odoo.conf:/etc/odoo.conf:ro prod/kkolba-odoo-v0.1 /start
-# TO_PROX_RUN:    sudo docker run -d --restart=always --name kkolba-odoo-prox -v=/opt/docker/kkolba-odoo/odoo-kraskolba:/mnt/proj:ro -v=/opt/docker/kkolba-odoo/log:/mnt/log:rw -v=/opt/docker/kkolba-odoo/odoo.conf:/etc/odoo.conf:ro prod/kkolba-odoo-v0.1 /start
+# TO_BUILD:       eatmydata docker build --tag=prod/kkolba-odoo-v0.1 .
+# TO_RUN:         docker run -d -p 8069 --restart=always --name kkolba-odoo-prox -v=/opt/docker/kkolba-odoo/odoo-kraskolba:/mnt/proj:ro -v=/opt/docker/kkolba-odoo/log:/mnt/log:rw -v=/opt/docker/kkolba-odoo/odoo.conf:/etc/odoo.conf:ro prod/kkolba-odoo-v0.1 /start
+# TO_PROX_RUN:    docker run -d --restart=always --name kkolba-odoo-prox -v=/opt/docker/kkolba-odoo/odoo-kraskolba:/mnt/proj:ro -v=/opt/docker/kkolba-odoo/log:/mnt/log:rw -v=/opt/docker/kkolba-odoo/odoo.conf:/etc/odoo.conf:ro prod/kkolba-odoo-v0.1 /start
 
 FROM ubuntu:14.04
 MAINTAINER TroLL <z@kspu.ru>

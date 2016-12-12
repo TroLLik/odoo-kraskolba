@@ -9,13 +9,11 @@
 
         <menuitem name="Список складов" sequence="11" id="menu_kraskolba_warehouse_depot"
                   parent="menu_kraskolba_warehouse_directory"
-                  action="action_kraskolba_warehouse_depot"
-                  groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
+                  action="action_kraskolba_warehouse_depot"/>
 
         <menuitem name="Номенклатура" sequence="16" id="menu_kraskolba_warehouse_nomenclature"
                   parent="menu_kraskolba_warehouse_directory"
-                  action="action_kraskolba_warehouse_nomenclature"
-                  groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
+                  action="action_kraskolba_warehouse_nomenclature"/>
 
         <menuitem name="Документы" sequence="17" id="menu_kraskolba_warehouse_category_documents"
                   parent="menu_kraskolba_warehouse_root"
@@ -23,8 +21,7 @@
 
         <menuitem name="Прием товара" sequence="16" id="menu_kraskolba_warehouse_document_reception"
                   parent="menu_kraskolba_warehouse_category_documents"
-                  action="action_kraskolba_warehouse_document_reception"
-                  groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
+                  action="action_kraskolba_warehouse_document_reception"/>
 
         <!-- Товары -->
         <menuitem name="Товары" sequence="16" id="menu_kraskolba_warehouse_goods"
@@ -38,16 +35,14 @@
 
         <menuitem name="Редактор" sequence="19" id="menu_kraskolba_warehouse_category_editor"
                   parent="menu_kraskolba_warehouse_category"
-                  action="action_kraskolba_warehouse_goodscategory"
-                  groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
+                  action="action_kraskolba_warehouse_goodscategory"/>
 
         <menuitem name="Схема" sequence="20" id="menu_kraskolba_warehouse_category_schema"
                   parent="menu_kraskolba_warehouse_category"
-                  action="action_kraskolba_warehouse_goodscategory_tree_as_tree"
-                  groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
+                  action="action_kraskolba_warehouse_goodscategory_tree_as_tree"/>
 
 
         <menuitem name="Список сотрудников" sequence="25" id="menu_kraskolba_warehouse_employee" parent="menu_kraskolba_warehouse_directory"
-                  action="action_kraskolba_warehouse_employee" groups="group_kraskolba_warehouse_user,group_kraskolba_warehouse_superuser"/>
+                  action="action_kraskolba_warehouse_employee"/>
     </data>
 </openerp>

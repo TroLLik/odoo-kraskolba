@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
         <!-- Отчеты -->
@@ -17,15 +17,23 @@
         <!-- Аттрибуты дублируют значения выше -->
 
         <!--<report id="report_nomenclature_card_id" model="kraskolba.warehouse.nomenclature" name="nomenclature_card" string="Карточка номенклатуры" />-->
-        <report
-                id="report_nomenclature_card_id"
-                model="kraskolba.warehouse.nomenclature"
-                string="Карточка номенклатуры"
-                report_type="qweb-pdf"
-                name="nomenclature_report"
-                file="reports.templates.nomenclature_report"
-                attachment_use="True"
-                attachment="('qwe.pdf')"
-        />
+
+        <template id="kraskolba_warehouse_nomenclature_template_report">
+            <t t-call="report.html_container">
+                <t t-call="report.internal_layout">
+                    <div class="page">
+                        <p>AAAAAAAAAAAAAAAAAAAZZZZZZZZZZZZAAAAAAAAAZZZZZZZAAAAAAAAA.</p>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <report id="kraskolba_warehouse_nomenclature_action_report"
+            model="kraskolba.warehouse.nomenclature"
+            name="kraskolba.warehouse.kraskolba_warehouse_nomenclature_template_report"
+            file="kraskolba.warehouse.kraskolba_warehouse_nomenclature_template_report"
+            string="Azazazaza"
+            report_type="qweb-pdf"/>
+
     </data>
 </openerp>
