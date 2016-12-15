@@ -20,6 +20,9 @@
 
         <template id="report.kraskolba_warehouse_nomenclature_template_report">
             <t t-call="report.html_container">
+                  <div class="header">
+                        Это хедер
+                  </div>
                 <t t-foreach="docs" t-as="o">
                     <t t-call="report.external_layout">
                         <div class="page">
