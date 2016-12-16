@@ -33,7 +33,6 @@
         'menu/kraskolba_warehouse_menu.xml',
 
         'reports/kraskolba_warehouse_report.xml',
-        # 'reports/nomenclature_report.xml',
     ],
 
     # demo data
