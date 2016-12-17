@@ -280,7 +280,7 @@ class DocumentReceptionGoods(models.Model):
     document_id = fields.Many2one(string=u'Документ', comodel_name='kraskolba.warehouse.document')
     depot_id = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot', required=True)
     supplier_id = fields.Many2one(string=u'Поставщик', comodel_name='kraskolba.warehouse.supplier', required=True)
-    goods_id = fields.Many2one(string=u'Товар на складе', comodel_name='kraskolba.warehouse.goods')
+    goods_id = fields.Many2one(string=u'Товар на складе', comodel_name='kraskolba.warehouse.document')
 
     @api.one
     @api.constrains('quantity')
