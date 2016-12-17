@@ -224,6 +224,8 @@ class Document(models.Model):
     _rec_name = 'name'
 
     name = fields.Char(string=u'Название документа', size=100)
+    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.document.reception.goods',
+                            inverse_name='document_id', ondelete='cascade', required=True)
 
 
 class DocumentReception(Document):
@@ -236,8 +238,7 @@ class DocumentReception(Document):
     ]
 
     name = fields.Char(string=u'Название документа', size=100, required=True)
-    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.document.reception.goods',
-                            inverse_name='document_id', ondelete='cascade', required=True)
+
     goods_count = fields.Integer(string=u'Количество товаров', compute='get_goods_count')
     state = fields.Selection(string=u'Статус', selection=STATES, default='draft')
 
@@ -276,7 +277,7 @@ class DocumentReceptionGoods(models.Model):
     nomenclature = fields.Many2one(string=u'Товар', comodel_name='kraskolba.warehouse.nomenclature', required=True)
     quantity = fields.Integer(default=1, string=u'Количество', required=True)
     price = fields.Float(default=0, digits=[6, 2], string=u'Входная цена', required=True)
-    document_id = fields.Many2one(string=u'Документ', comodel_name='kraskolba.warehouse.document.reception')
+    document_id = fields.Many2one(string=u'Документ', comodel_name='kraskolba.warehouse.document')
     depot_id = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot', required=True)
     supplier_id = fields.Many2one(string=u'Поставщик', comodel_name='kraskolba.warehouse.supplier', required=True)
     goods_id = fields.Many2one(string=u'Товар на складе', comodel_name='kraskolba.warehouse.goods')
