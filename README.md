@@ -1,6 +1,5 @@
 ## Для запуска экосистемы разработчика 
 * Идем в ./Docker/odoo-dev-ecosys
-* Вдумчиво правим пути в docker-compose.yml
 * Если хотим логи в консоль, коментим (;) строку logfile = /mnt/log/odoo-server.log в ./Docker/odoo-dev-ecosys/odoo-app/odoo.conf
 * Если хотим логи в файл, нужно в хост системе выполнить
 
