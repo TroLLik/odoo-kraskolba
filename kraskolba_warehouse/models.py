@@ -215,14 +215,14 @@ class Goods(models.Model):
     depot_id = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot')
     serial_code = fields.Char(string=u'Серийный код')
     comment = fields.Char(string=u'Комментарий')
-    quantity = fields.Integer(string=u'Количество', default=1)
+    quantity = fields.Integer(string=u'Количество', default=1, required=True)
     document_goods_id = fields.Many2one(string=u'Товар в документе',
                                         comodel_name='kraskolba.warehouse.document.reception.goods')
 
     @api.one
     @api.constrains('quantity')
     def _check_quantity(self):
-        if self.count < 1:
+        if self.quantity < 1:
             raise exceptions.ValidationError(u"Количество должно быть больше 0!")
 
 

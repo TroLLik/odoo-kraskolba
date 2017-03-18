@@ -96,7 +96,6 @@
                                 <field name="quantity"/>
                                 <field name="price"/>
                                 <field name="depot_id"/>
-                                <field name="quantity"/>
                             </tree>
                         </field>
                     </group>
