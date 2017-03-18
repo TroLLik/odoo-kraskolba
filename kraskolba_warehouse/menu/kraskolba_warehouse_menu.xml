@@ -23,8 +23,8 @@
                   parent="menu_kraskolba_warehouse_category_documents"
                   action="action_kraskolba_warehouse_document_reception"/>
 
-        <!-- Товары -->
-        <menuitem name="Товары" sequence="16" id="menu_kraskolba_warehouse_goods"
+        <!-- Партии -->
+        <menuitem name="Партии" sequence="16" id="menu_kraskolba_warehouse_goods"
                   parent="menu_kraskolba_warehouse_directory"
                   action="action_kraskolba_warehouse_goods"/>
 

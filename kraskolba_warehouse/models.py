@@ -19,7 +19,7 @@ class Depot(models.Model):
     location = fields.Char(string=u'Расположение', required=False, size=255)
     description = fields.Text(string=u'Описание')
     is_returning = fields.Boolean(string=u'Возвратный склад')
-    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.goods', compute='_get_goods')
+    goods = fields.One2many(string=u'Партии', comodel_name='kraskolba.warehouse.goods', compute='_get_goods')
 
     @api.one
     def _get_goods(self):
@@ -195,6 +195,14 @@ class Nomenclature(models.Model):
     comment = fields.Char(string=u'Комментарий', size=300)
     manufacturer = fields.Many2one(string=u'Производитель', comodel_name='kraskolba.warehouse.manufacturer')
     category = fields.Many2one(string=u'Категория', comodel_name='kraskolba.warehouse.goodscategory', required=True)
+    goods_id = fields.One2many(string=u'Партии', comodel_name='kraskolba.warehouse.goods',
+                               inverse_name='nomenclature_id')
+    remainder = fields.Integer(string=u'Остаток', compute='_compute_remainder')
+
+    @api.multi
+    @api.depends('goods_id')
+    def _compute_remainder(self):
+        self.remainder = reduce(lambda acc, x: acc + x.quantity, self.goods_id, 0)
 
     @api.multi
     @api.depends('image')
@@ -213,11 +221,11 @@ class Goods(models.Model):
 
     nomenclature_id = fields.Many2one(string=u'Номенклатура', comodel_name='kraskolba.warehouse.nomenclature')
     depot_id = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot')
-    serial_code = fields.Char(string=u'Серийный код')
+    serial_code = fields.Char(string=u'Серийный номер')
     comment = fields.Char(string=u'Комментарий')
     quantity = fields.Integer(string=u'Количество', default=1, required=True)
     document_goods_id = fields.Many2one(string=u'Товар в документе',
-                                        comodel_name='kraskolba.warehouse.document.reception.goods')
+                                        comodel_name='kraskolba.warehouse.document.reception')
 
     @api.one
     @api.constrains('quantity')
@@ -260,7 +268,7 @@ class DocumentReception(Document):
                 'quantity': good.quantity,
                 'serial_code': '123',
                 'comment': '',
-                'document_goods_id': good.id
+                'document_goods_id': self
             })
 
     @api.one

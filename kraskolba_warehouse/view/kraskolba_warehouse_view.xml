@@ -135,10 +135,13 @@
                             <field name="location"/>
                             <field name="is_returning"/>
                             <field name="description"/>
-                            <field name="goods">
+                        </group>
+                        <group string="Партии">
+                            <field name="goods" nolabel="1">
                                 <tree string="Товары">
                                     <field name="nomenclature_id"/>
                                     <field name="serial_code"/>
+                                    <field name="quantity"/>
                                 </tree>
                             </field>
                         </group>
@@ -180,6 +183,7 @@
                             <field name="nomenclature_id"/>
                             <field name="serial_code"/>
                             <field name="depot_id"/>
+                            <field name="document_goods_id"/>
                             <field name="quantity"/>
                             <field name="comment"/>
                         </group>
@@ -189,7 +193,7 @@
         </record>
 
         <record id="action_kraskolba_warehouse_goods" model="ir.actions.act_window">
-            <field name="name">Список товаров</field>
+            <field name="name">Список партий</field>
             <field name="res_model">kraskolba.warehouse.goods</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -247,6 +251,16 @@
                     <group>
                         <field name="description"/>
                         <field name="comment"/>
+                        <field name="remainder"/>
+                    </group>
+                    <group string="Остатки">
+                        <field name="goods_id" nolabel="1">
+                            <tree>
+                                <field name="serial_code"/>
+                                <field name="depot_id"/>
+                                <field name="quantity"/>
+                            </tree>
+                        </field>
                     </group>
                 </form>
             </field>
