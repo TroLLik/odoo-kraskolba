@@ -277,10 +277,10 @@ class DocumentReceptionGoods(models.Model):
     nomenclature = fields.Many2one(string=u'Товар', comodel_name='kraskolba.warehouse.nomenclature', required=True)
     quantity = fields.Integer(default=1, string=u'Количество', required=True)
     price = fields.Float(default=0, digits=[6, 2], string=u'Входная цена', required=True)
-    document_id = fields.Many2one(string=u'Документ', comodel_name='kraskolba.warehouse.document')
+    document_id = fields.Many2one(string=u'Документ', comodel_name='kraskolba.warehouse.document.reception')
     depot_id = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot', required=True)
     supplier_id = fields.Many2one(string=u'Поставщик', comodel_name='kraskolba.warehouse.supplier', required=True)
-    goods_id = fields.Many2one(string=u'Товар на складе', comodel_name='kraskolba.warehouse.document')
+    goods_id = fields.Many2one(string=u'Товар на складе', comodel_name='kraskolba.warehouse.goods')
 
     @api.one
     @api.constrains('quantity')
