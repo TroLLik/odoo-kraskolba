@@ -96,6 +96,7 @@
                                 <field name="quantity"/>
                                 <field name="price"/>
                                 <field name="depot_id"/>
+                                <field name="quantity"/>
                             </tree>
                         </field>
                     </group>
@@ -165,6 +166,7 @@
                     <field name="nomenclature_id"/>
                     <field name="serial_code"/>
                     <field name="depot_id"/>
+                    <field name="quantity"/>
                 </tree>
             </field>
         </record>
@@ -179,6 +181,7 @@
                             <field name="nomenclature_id"/>
                             <field name="serial_code"/>
                             <field name="depot_id"/>
+                            <field name="quantity"/>
                             <field name="comment"/>
                         </group>
                     </sheet>

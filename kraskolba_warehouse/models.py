@@ -215,8 +215,15 @@ class Goods(models.Model):
     depot_id = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot')
     serial_code = fields.Char(string=u'Серийный код')
     comment = fields.Char(string=u'Комментарий')
+    quantity = fields.Integer(string=u'Количество', default=1)
     document_goods_id = fields.Many2one(string=u'Товар в документе',
                                         comodel_name='kraskolba.warehouse.document.reception.goods')
+
+    @api.one
+    @api.constrains('quantity')
+    def _check_quantity(self):
+        if self.count < 1:
+            raise exceptions.ValidationError(u"Количество должно быть больше 0!")
 
 
 class Document(models.Model):
@@ -247,14 +254,14 @@ class DocumentReception(Document):
         self.state = 'accepted'
         goods_model = self.env['kraskolba.warehouse.goods']
         for good in self.goods:
-            for _ in range(good.quantity):
-                goods_model.create({
-                    'nomenclature_id': good.nomenclature.id,
-                    'depot_id': good.depot_id.id,
-                    'serial_code': '123',
-                    'comment': '',
-                    'document_goods_id': good.id
-                })
+            goods_model.create({
+                'nomenclature_id': good.nomenclature.id,
+                'depot_id': good.depot_id.id,
+                'quantity': good.quantity,
+                'serial_code': '123',
+                'comment': '',
+                'document_goods_id': good.id
+            })
 
     @api.one
     def draft_state(self):
