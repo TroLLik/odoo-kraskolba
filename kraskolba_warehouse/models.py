@@ -202,15 +202,17 @@ class Nomenclature(models.Model):
     @api.multi
     @api.depends('goods_id')
     def _compute_remainder(self):
-        self.ensure_one()
-        self.remainder = reduce(lambda acc, x: acc + x.quantity, self.goods_id, 0)
+        for s in self:
+            s.remainder = reduce(lambda acc, x: acc + x.quantity, s.goods_id, 0)
+
+    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.goods', inverse_name='nomenclature_id')
 
     @api.multi
     @api.depends('image')
     def _compute_image_medium(self):
         self.image_medium = tools.image_resize_image_medium(self.image)
 
-    @api.one
+    @api.multi
     @api.depends('image_medium')
     def _inverse_image_medium(self):
         self.image = tools.image_resize_image_big(self.image_medium)

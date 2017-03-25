@@ -61,7 +61,7 @@
 
         <!-- document reception begin-->
         <record id="view_kraskolba_warehouse_document_reception_tree" model="ir.ui.view">
-            <field name="name">kraskolba.warehouse.document..reception.tree</field>
+            <field name="name">kraskolba.warehouse.document.reception.tree</field>
             <field name="model">kraskolba.warehouse.document.reception</field>
             <field name="arch" type="xml">
                 <tree>
@@ -295,7 +295,7 @@
                 <tree>
                     <field name="name"/>
                     <field name="category"/>
-                    <!--<field name="price"/>-->
+                    <field name="remainder"/>
                 </tree>
             </field>
         </record>
@@ -312,6 +312,7 @@
                             <field name="name" class="oe_inline"/>
                         </h1>
                     </div>
+                    <field name="remainder"/>
                     <group string="Остатки">
                         <field name="goods_id" nolabel="1">
                             <tree>

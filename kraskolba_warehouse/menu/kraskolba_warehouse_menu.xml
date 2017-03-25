@@ -19,12 +19,12 @@
                   parent="menu_kraskolba_warehouse_root"
                   action="base.grant_menu_access"/>
 
-        <menuitem name="Прием товара" sequence="16" id="menu_kraskolba_warehouse_document_reception"
+        <menuitem name="Прием товара" sequence="18" id="menu_kraskolba_warehouse_document_reception"
                   parent="menu_kraskolba_warehouse_category_documents"
                   action="action_kraskolba_warehouse_document_reception"/>
 
         <!-- Партии -->
-        <menuitem name="Партии" sequence="16" id="menu_kraskolba_warehouse_goods"
+        <menuitem name="Партии" sequence="20" id="menu_kraskolba_warehouse_goods"
                   parent="menu_kraskolba_warehouse_directory"
                   action="action_kraskolba_warehouse_goods"/>
 
@@ -36,11 +36,11 @@
         <menuitem name="Категории номенклатуры" sequence="18" id="menu_kraskolba_warehouse_category" parent="menu_kraskolba_warehouse_root"
                   action="base.grant_menu_access"/>
 
-        <menuitem name="Редактор" sequence="19" id="menu_kraskolba_warehouse_category_editor"
+        <menuitem name="Редактор" sequence="21" id="menu_kraskolba_warehouse_category_editor"
                   parent="menu_kraskolba_warehouse_category"
                   action="action_kraskolba_warehouse_goodscategory"/>
 
-        <menuitem name="Схема" sequence="20" id="menu_kraskolba_warehouse_category_schema"
+        <menuitem name="Схема" sequence="22" id="menu_kraskolba_warehouse_category_schema"
                   parent="menu_kraskolba_warehouse_category"
                   action="action_kraskolba_warehouse_goodscategory_tree_as_tree"/>
 
