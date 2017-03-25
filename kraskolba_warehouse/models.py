@@ -243,8 +243,9 @@ class Document(models.Model):
                             inverse_name='document_id', ondelete='cascade', required=True)
 
 
-class DocumentReception(Document):
+class DocumentReception(models.Model):
     _name = 'kraskolba.warehouse.document.reception'
+    _inherit = 'kraskolba.warehouse.document'
     _rec_name = 'name'
 
     STATES = [
@@ -253,7 +254,8 @@ class DocumentReception(Document):
     ]
 
     name = fields.Char(string=u'Название документа', size=100, required=True)
-
+    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.document.reception.goods',
+                            inverse_name='document_id', ondelete='cascade', required=True)
     goods_count = fields.Integer(string=u'Количество товаров', compute='get_goods_count')
     state = fields.Selection(string=u'Статус', selection=STATES, default='draft')
 
@@ -268,7 +270,7 @@ class DocumentReception(Document):
                 'quantity': good.quantity,
                 'serial_code': '123',
                 'comment': '',
-                'document_goods_id': self
+                'document_goods_id': self.id
             })
 
     @api.one
