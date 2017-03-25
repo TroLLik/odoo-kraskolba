@@ -23,6 +23,10 @@
                   parent="menu_kraskolba_warehouse_category_documents"
                   action="action_kraskolba_warehouse_document_reception"/>
 
+        <menuitem name="Списывание товара" sequence="18" id="menu_kraskolba_warehouse_document_writeoff"
+                  parent="menu_kraskolba_warehouse_category_documents"
+                  action="action_kraskolba_warehouse_document_writeoff"/>
+
         <!-- Партии -->
         <menuitem name="Партии" sequence="20" id="menu_kraskolba_warehouse_goods"
                   parent="menu_kraskolba_warehouse_directory"

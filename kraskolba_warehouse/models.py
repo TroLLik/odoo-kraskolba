@@ -250,22 +250,51 @@ class Document(models.Model):
     def _needaction_domain_get(self):
         return [('state', '=', 'draft')]
 
-        # class DocumentWriteOff(models.Model):
-        # _name = 'kraskolba.warehouse.document.writeoff'
-        # _inherit = 'kraskolba.warehouse.document'
-        # _rec_name = 'name'
-        #
-        # STATES = [
-        #     ('draft', u'Заявочка'),
-        #     ('accepted', u'Принято'),
-        # ]
-        #
-        # name = fields.Char(string=u'Название документа', size=100, required=True, default=lambda self: str(self.id))
-        #
-        # goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.document.reception.goods',
-        #                         inverse_name='document_id', ondelete='cascade', required=True)
-        # goods_count = fields.Integer(string=u'Количество товаров', compute='get_goods_count')
-        # state = fields.Selection(string=u'Статус', selection=STATES, default='draft')
+
+class DocumentWriteOff(models.Model):
+    _name = 'kraskolba.warehouse.document.writeoff'
+    _inherit = 'kraskolba.warehouse.document'
+    _rec_name = 'name'
+
+    STATES = [
+        ('draft', u'Заявочка'),
+        ('accepted', u'Принято'),
+    ]
+
+    name = fields.Char(string=u'Название документа', size=100, required=True, default=lambda self: str(self.id))
+
+    goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.document.reception.goods',
+                            inverse_name='document_id', ondelete='cascade', required=True)
+    goods_count = fields.Integer(string=u'Количество товаров', compute='get_goods_count')
+    state = fields.Selection(string=u'Статус', selection=STATES, default='draft')
+
+    @api.one
+    def accepted_state(self):
+        self.state = 'accepted'
+        goods_model = self.env['kraskolba.warehouse.goods']
+        for good in self.goods:
+            goods_model.create({
+                'nomenclature_id': good.nomenclature.id,
+                'depot_id': good.depot_id.id,
+                'quantity': good.quantity,
+                'serial_code': '',
+                'comment': '',
+                'document_goods_id': self.id
+            })
+
+    @api.one
+    def draft_state(self):
+        self.state = 'draft'
+
+    @api.one
+    def get_goods_count(self):
+        self.goods_count = len(self.goods.ids)
+
+    @api.one
+    @api.constrains('goods')
+    def _check_price(self):
+        if len(self.goods) < 1:
+            raise exceptions.ValidationError(u"Добавьте товары!")
 
 
 class DocumentReception(models.Model):
@@ -279,10 +308,17 @@ class DocumentReception(models.Model):
     ]
 
     name = fields.Char(string=u'Название документа', size=100, required=True)
+    depot_id = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot', required=True)
     goods = fields.One2many(string=u'Товары', comodel_name='kraskolba.warehouse.document.reception.goods',
                             inverse_name='document_id', ondelete='cascade', required=True)
     goods_count = fields.Integer(string=u'Количество товаров', compute='get_goods_count')
+
     state = fields.Selection(string=u'Статус', selection=STATES, default='draft')
+
+    @api.onchange('name')  # if these fields are changed, call method
+    def check_change(self):
+        if self.name == u'123':
+            self.name = u'228'
 
     @api.one
     def accepted_state(self):
@@ -323,6 +359,13 @@ class DocumentReceptionGoods(models.Model):
     depot_id = fields.Many2one(string=u'Склад', comodel_name='kraskolba.warehouse.depot', required=True)
     supplier_id = fields.Many2one(string=u'Поставщик', comodel_name='kraskolba.warehouse.supplier', required=True)
     goods_id = fields.Many2one(string=u'Товар на складе', comodel_name='kraskolba.warehouse.goods')
+    total_price = fields.Float(string=u'Сумма', digits=[6, 2], default=0, readonly=True)
+
+    @api.onchange('quantity', 'price')
+    def check_total_price(self):
+        if self.quantity and self.price:
+            self.total_price = self.quantity * self.price
+        return False
 
     @api.one
     @api.constrains('quantity')

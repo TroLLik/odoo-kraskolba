@@ -92,10 +92,11 @@
                         <field name="goods" nolabel="1" colspan="2">
                             <tree editable="bottom">
                                 <field name="nomenclature"/>
+                                <field name="depot_id"/>
                                 <field name="supplier_id"/>
                                 <field name="quantity"/>
                                 <field name="price"/>
-                                <field name="depot_id"/>
+                                <field name="total_price"/>
                             </tree>
                         </field>
                     </group>
@@ -110,6 +111,58 @@
             <field name="view_mode">tree,form</field>
         </record>
         <!-- document reception end-->
+
+        <!-- document writeoff begin-->
+        <record id="view_kraskolba_warehouse_document_writeoff_tree" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.document.writeoff.tree</field>
+            <field name="model">kraskolba.warehouse.document.writeoff</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="goods_count"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_kraskolba_warehouse_document_writeoff_form" model="ir.ui.view">
+            <field name="name">kraskolba.warehouse.document.writeoff.form</field>
+            <field name="model">kraskolba.warehouse.document.writeoff</field>
+            <field name="arch" type="xml">
+                <form string="Данные документа">
+                    <header style="padding:2px 0;">
+                        <button string="Принять товарчики" type="object" class="oe_highlight" name="accepted_state"
+                                attrs="{'invisible': [('state','!=','draft')]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <group>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <field name="goods" nolabel="1" colspan="2">
+                            <tree editable="bottom">
+                                <field name="nomenclature"/>
+                                <field name="supplier_id"/>
+                                <field name="quantity"/>
+                                <field name="price"/>
+                                <field name="depot_id"/>
+                            </tree>
+                        </field>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_kraskolba_warehouse_document_writeoff" model="ir.actions.act_window">
+            <field name="name">Прием товара</field>
+            <field name="res_model">kraskolba.warehouse.document.writeoff</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- document writeoff end-->
 
         <!-- depot -->
         <record id="view_kraskolba_warehouse_depot_tree" model="ir.ui.view">
